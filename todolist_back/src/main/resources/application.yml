@@ -20,4 +20,4 @@ spring:
         - common
 mybatis:
   mapper-locations:
-    - /mapper/*.xml
+    - /mappers/*.xml
