@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as s from "./Mainstyle";
-import useInput from '../hooks/useInput';
 import axios from 'axios';
 
 function MainPage() {
 
-    const userIdInput = useInput();
-    const todoIdInput = useInput();
-    const todoNameInput = useInput();
-    const updateDateInput = useInput();
+    const [ searchParams, setSearchParams ] = useState({
+        todoName: "",
+        updateDate: ""
+    });
+
+    const handleSearchInputChange = (e) => {
+        setSearchParams(searchParams => ({
+            ...searchParams,
+            [e.target.name]: e.target.value
+        }))
+    }
 
     const [ todoList, setTodoList ] = useState([]);
 
@@ -17,15 +23,13 @@ function MainPage() {
 
     }
 
-    const handleSearchClick = () => {
-        const todo = {
-            user_id: userIdInput.value,
-            todo_id: todoIdInput.value,
-            todo_name: todoNameInput.value,
-            update_date: updateDateInput.value
+    const handleSearchClick = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080//todo", searchParams);
+            console.log(response);
+        }catch(e) {
+            console.error(e);
         }
-
-        axios.get("http://localhost:8080//todo", todo)
     }
 
     return (
@@ -56,10 +60,10 @@ function MainPage() {
                 <div css={s.box3}>
                     <div css={s.box3_sub1}>
                         <div css={s.box3_sub1_span1}>
-                            <input type='date' css={s.box3_sub1_date}></input>
+                            <input type='date' css={s.box3_sub1_date} name='updateDate' onChange={handleSearchInputChange} value={searchParams.updateDate}/>
                         </div>
                         <div css={s.box3_sub1_span2}>
-                            <input type="text" css={s.box3_sub1_input} />
+                            <input type="text" css={s.box3_sub1_input} name='todoName' onChange={handleSearchInputChange} value={searchParams.todoName}/>
                             <button css={s.box3_sub1_button}
                                 value>검색</button>
                         </div>
