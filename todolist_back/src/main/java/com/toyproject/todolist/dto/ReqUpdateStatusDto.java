@@ -5,8 +5,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class ReqUpdateTodoDto {
+public class ReqUpdateStatusDto {
     private int todoId;
-    private String todoName;
     private int status;
 }

@@ -8,11 +8,49 @@
         values
         (0, 1, #{todoName}, 0, NOW(), NOW());
     </insert>
+
+    <update id="updateTodoName" parameterType="com.toyproject.todolist.entity.Todo">
+        update todo_tb
+        set
+            todo_name = #{todoName},
+            status = #{status},
+            update_date = NOW()
+        where
+            todo_id = #{todoId}
+    </update>
+
     <delete id="delete" parameterType="integer">
         delete
         from
             todo_tb
         where
-            todoId = #{todoid}
+            todo_id = #{todoId}
     </delete>
+
+    <select id="findTodoById" parameterType="integer" resultType="com.toyproject.todolist.entity.Todo">
+        select
+            todo_id as todoId,
+            user_id as userId,
+            todo_name as todoName,
+            status,
+            update_date as updateDate
+        from
+            todo_tb
+        where
+            todo_id = #{todoId}
+    </select>
+
+
+    <select id="findTodoListByTodoId" resultType="com.toyproject.todolist.entity.Todo">
+        select
+            todo_id as todoId,
+            user_id as userId,
+            todo_name as todoName,
+            status,
+            update_date as updateDate
+        from
+            todo_tb
+        where
+            todo_name like concat ("%", #{todoName}, "%")
+    </select>
 </mapper>

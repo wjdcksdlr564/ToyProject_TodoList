@@ -1,14 +1,14 @@
 package com.toyproject.todolist.controller;
 
+import com.toyproject.todolist.dto.ReqGetTodoListDto;
 import com.toyproject.todolist.dto.ReqRegisterTodoDto;
-import com.toyproject.todolist.entity.Todo;
+import com.toyproject.todolist.dto.ReqUpdateTodoDto;
 import com.toyproject.todolist.service.TodoServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 @Log4j2
@@ -30,4 +30,26 @@ public class TodoController {
         log.info("{}", todoId);
         return ResponseEntity.ok().body(todoService.deleteTodo(todoId));
     }
+
+    // todoName 수정
+    @PutMapping("/todo/{todoId}")
+    public ResponseEntity<?> modifyTodoNameApi(@PathVariable int todoId, @RequestBody ReqUpdateTodoDto reqDto) {
+        log.info("{}", reqDto);
+        return ResponseEntity.ok().body(todoService.modifyTodo(reqDto));
+    }
+
+    // 단건조회
+    @GetMapping("/todo/{todoId}")
+    public ResponseEntity<?> getApi(@PathVariable int todoId) {
+        log.info("{}", todoId);
+        return ResponseEntity.ok().body(todoService.getTodo(todoId));
+    }
+
+    // 다건조회
+    @GetMapping("todos")
+    public ResponseEntity<?> getListApi(@RequestBody ReqGetTodoListDto reqDto) {
+        log.info("{}", reqDto);
+        return ResponseEntity.ok().body(todoService.getListApi(reqDto));
+    }
+
 }
