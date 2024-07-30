@@ -144,6 +144,7 @@ export const box2_sub4_button = css`
 export const box3 = css`
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     box-sizing: border-box;
     border: none;
     width: 100%;
@@ -229,41 +230,10 @@ export const box3_sub2_header = css`
     flex-grow: 1;
 `;
 
-export const box3_sub2_body = css`
+export const b0x3_sub2_body = css`
 
 `;
 
-export const box3_body_checkbox = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: none;
-`;
+export const resultButton = css`
 
-export const box3_body_id = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: none;
-`;
-
-export const box3_body_date = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: none;
-`;
-
-export const box3_body_content = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: none;
-`;
-
-export const box3_body_manage = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: none;
 `;

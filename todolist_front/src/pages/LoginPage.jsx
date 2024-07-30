@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as s from "./Loginstyle"
-import { Link } from 'react-router-dom';
 
 function LoginPage(props) {
 
@@ -56,9 +55,7 @@ function LoginPage(props) {
                     <span css={s.inputCheck}>PW 확인 메세지</span>
                 </div>
                 <p>
-                    <Link to="/async/todo">
-                         <button css={s.submitButton} onClick={handleSubmit}>완료</button>
-                    </Link>
+                    <button css={s.submitButton} onClick={handleSubmit}>완료</button>
                 </p>
             </main>
         </div>
