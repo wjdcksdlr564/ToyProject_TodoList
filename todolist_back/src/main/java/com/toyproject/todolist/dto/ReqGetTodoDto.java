@@ -5,11 +5,11 @@ import lombok.Data;
 
 @Data
 public class ReqGetTodoDto {
-    private String todoName;
+    private int todoId;
 
     public Todo toEntity() {
         return Todo.builder()
-                .todoName(todoName)
+                .todoId(todoId)
                 .build();
     }
 }
