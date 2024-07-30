@@ -30,6 +30,10 @@ export const global = css`
         border-collapse: collapse;
     }
 
+    tr {
+        height: 30px;
+    }
+
     th, td {
         border: 1px solid black;
         border-left: none;
@@ -40,7 +44,6 @@ export const global = css`
         box-sizing: border-box;
         border: 1px solid #dbdbdb;
         padding: 5px 10px;
-        border-radius: 30px;
         background-color: #ffffff;
         cursor: pointer;
         &:hover {

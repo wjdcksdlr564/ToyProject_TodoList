@@ -230,10 +230,41 @@ export const box3_sub2_header = css`
     flex-grow: 1;
 `;
 
-export const b0x3_sub2_body = css`
+export const box3_sub2_body = css`
 
 `;
 
-export const resultButton = css`
+export const box3_body_checkbox = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: none;
+`;
 
+export const box3_body_id = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: none;
+`;
+
+export const box3_body_date = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: none;
+`;
+
+export const box3_body_content = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: none;
+`;
+
+export const box3_body_manage = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: none;
 `;

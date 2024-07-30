@@ -9,12 +9,11 @@ function App() {
   return (
     <>
       <Global styles={global}/>
-        <LoginPage>
+      <LoginPage>
           <Routes>
-            <Route path="/async/login" element={<LoginPage/>} />
+            <Route path="/async/todo" element={<MainPage />} />
           </Routes>
-        </LoginPage>
-        <MainPage></MainPage>
+      </LoginPage>
     </>
   );
 }

@@ -6,6 +6,7 @@ import axios from 'axios';
 function MainPage() {
 
     const [ searchParams, setSearchParams ] = useState({
+        index: 0,
         todoName: "",
         updateDate: ""
     });
@@ -20,16 +21,20 @@ function MainPage() {
     const [ todoList, setTodoList ] = useState([]);
 
     const handleRegisterButtonClick = () => {
-
+        
     }
 
     const handleSearchClick = async () => {
         try {
             const response = await axios.get("http://localhost:8080//todo", searchParams);
             console.log(response);
-        }catch(e) {
+        } catch(e) {
             console.error(e);
         }
+    }
+
+    const handleDeleteClick = (e) => {
+        setTodoList(todoList => [ ...todoList.filter((searchParams, index) => index !== parseInt(e.target.value)) ])
     }
 
     return (
@@ -65,7 +70,7 @@ function MainPage() {
                         <div css={s.box3_sub1_span2}>
                             <input type="text" css={s.box3_sub1_input} name='todoName' onChange={handleSearchInputChange} value={searchParams.todoName}/>
                             <button css={s.box3_sub1_button}
-                                value>검색</button>
+                                onClick={handleSearchClick}>검색</button>
                         </div>
                     </div>
                     <table css={s.box3_sub2}>
@@ -79,20 +84,18 @@ function MainPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {
-                                todoList.map(todo => {
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td css={s.resultButton}>
+                                        <td css={s.box3_body_checkbox}>
+                                            <input type="checkbox" />
+                                        </td>
+                                        <td css={s.box3_body_id}>id</td>
+                                        <td css={s.box3_body_date}></td>
+                                        <td css={s.box3_body_content}></td>
+                                        <td css={s.box3_body_manage}>
                                             <button>수정</button>
-                                            <button>삭제</button>
+                                            <button onClick={handleDeleteClick} value={searchParams.index}>삭제</button>
                                         </td>
                                     </tr>
-                                })
-                            }
                         </tbody>
                     </table>
                 </div>
