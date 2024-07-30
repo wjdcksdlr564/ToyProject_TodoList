@@ -144,7 +144,6 @@ export const box2_sub4_button = css`
 export const box3 = css`
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     box-sizing: border-box;
     border: none;
     width: 100%;

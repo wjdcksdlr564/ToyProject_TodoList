@@ -30,11 +30,12 @@ export const global = css`
         border-collapse: collapse;
     }
 
-    tr {
+    tr, td {
         height: 30px;
     }
 
     th, td {
+        text-align: center;
         border: 1px solid black;
         border-left: none;
         border-collapse: collapse;
