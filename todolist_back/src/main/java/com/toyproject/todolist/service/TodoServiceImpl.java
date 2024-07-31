@@ -81,4 +81,24 @@ public class TodoServiceImpl implements TodoService {
         return respDtos;
     }
 
+    @Override
+    public List<RespGetAllTodoDto> getAllTodo() {
+        List<RespGetAllTodoDto> respAllDto = new ArrayList<>();
+
+        // db에서 꺼내온 값을
+        List<Todo> todos = todoMapper.findAllTodo();
+
+        // dto로 변환
+        for(Todo to: todos) {
+            RespGetAllTodoDto dto = RespGetAllTodoDto.builder()
+                    .todoId(to.getTodoId())
+                    .todoName(to.getTodoName())
+                    .status(to.getStatus())
+                    .updateDate(to.getUpdateDate())
+                    .build();
+            respAllDto.add(dto);
+        }
+
+        return respAllDto;
+    }
 }

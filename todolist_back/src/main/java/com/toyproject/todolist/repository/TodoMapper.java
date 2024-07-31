@@ -12,4 +12,5 @@ public interface TodoMapper {
     int updateTodoName(Todo todo);
     Todo findTodoById(int todoId);
     List<Todo> findTodoListByTodoId(Todo todo);
+    List<Todo> findAllTodo();
 }

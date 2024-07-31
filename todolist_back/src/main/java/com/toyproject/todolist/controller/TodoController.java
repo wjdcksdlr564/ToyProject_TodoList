@@ -52,4 +52,9 @@ public class TodoController {
         return ResponseEntity.ok().body(todoService.getListApi(reqDto));
     }
 
+    // 전체조회
+    @GetMapping("/todolist")
+    public ResponseEntity<?> getAllApi() {
+        return ResponseEntity.ok().body(todoService.getAllTodo());
+    }
 }
