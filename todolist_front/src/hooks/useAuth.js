@@ -8,14 +8,16 @@ function useAuth() {
     const [ authUserState, setAuthUserState ] = useRecoilState(authUserStateAtom);
 
     const checkAuthentication = async () => {
-        // const response = await getAuthentication();
+        const response = await getAuthentication();
 
-        const response = {
-            status: 200
-        }
+        // const response = {
+        //     status: 200
+        // }
+
+        console.log(response);
 
         if(response.status === 200) {
-            setAuthUserState(response);
+            setAuthUserState(response.data);
         }else {
             setAuthUserState(null);
         }

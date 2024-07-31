@@ -11,5 +11,5 @@ public class RespTodoListDto {
     private int todoId;
     private String todoName;
     private int status;
-    private LocalDateTime updateDate;
+    private String updateDate;
 }

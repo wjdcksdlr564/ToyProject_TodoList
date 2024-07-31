@@ -2,9 +2,12 @@ import axios from 'axios';
 import React, { useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as s from "./Loginstyle"
+import api from '../apis/instance';
+import { useRecoilState } from 'recoil';
+import { authStateAtom } from '../atoms/AuthAtom';
 
 function LoginPage(props) {
-
+    const [ authState, setAuthState ] = useRecoilState(authStateAtom);
     const [ user, setUser ] = useState({
         username : "",
         password : ""
@@ -17,14 +20,17 @@ function LoginPage(props) {
         }))
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
 
-        axios.post("http://localhost:8080/user", user)
-            .then(response => {
-                console.log(response.data);
-            }).catch(error => {
-                console.log(error);
-            });
+        try {
+            console.log(user);
+            const response = await api.post("http://localhost:8080/api/v1/login", user);
+            console.log(response.status);
+            setAuthState(true);
+        } catch (error) {
+            console.error(error.response.data);
+            alert(error.response.data.message);
+        }
     }
     
     return (
@@ -47,7 +53,8 @@ function LoginPage(props) {
                 <div css={s.inputcontainer}>
                     <p>
                         <label htmlFor="">PW: </label>
-                        <input type="password" 
+                        <input type="password"
+                            name="password"
                             onChange={handleInputChange}
                             value={user.value}
                         />
