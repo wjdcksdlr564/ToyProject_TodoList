@@ -11,4 +11,5 @@ public interface TodoService {
     CommonRespDto modifyTodo(ReqUpdateTodoDto reqDto);
     RespTodoDto getTodo(int todoId);
     List<RespTodoListDto> getListApi(ReqGetTodoListDto reqDto);
+    List<RespGetAllTodoDto> getAllTodo();
 }

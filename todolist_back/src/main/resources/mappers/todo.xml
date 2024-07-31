@@ -53,4 +53,14 @@
         where
             todo_name like concat ("%", #{todoName}, "%")
     </select>
+    <select id="findAllTodo" resultType="com.toyproject.todolist.entity.Todo">
+        select
+            todo_id as todoId,
+            user_id as userId,
+            todo_name as todoName,
+            status,
+            update_date as updateDate
+        from
+            todo_tb
+    </select>
 </mapper>
