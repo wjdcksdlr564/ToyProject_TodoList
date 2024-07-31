@@ -149,6 +149,7 @@ export const box3 = css`
     width: 100%;
     margin: 0;
     padding: 0;
+    overflow-y: auto;
 `;
 
 export const box3_sub1 = css`
