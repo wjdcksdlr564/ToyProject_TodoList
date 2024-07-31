@@ -1,19 +1,71 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as s from "./Mainstyle";
 import axios from 'axios';
 import ReactModal from 'react-modal';
 import { css } from '@emotion/react';
+import RegisterModal from '../hooks/RegisterModal';
+import { Link } from 'react-router-dom';
 
 function MainPage() {
 
-    const [ isModalOpen, setModalOpen ] = useState(false);
-
+    const [ mode, setMode ] = useState(0);
+    
     const [ searchParams, setSearchParams ] = useState({
-        index: 0,
-        todoName: "",
-        updateDate: ""
+        user_id: 0,
+        todo_name: "",
+        update_date: ""
     });
+    
+    const [ todo, setTodo ] = useState({
+        check: false,
+        user_id: 0,
+        update_date: "",
+        todo_name: ""
+    });
+
+    const [ check, setCheck ] = useState({
+        id: "",
+        check: false
+    });
+
+    const [ todoList, setTodoList ] = useState([]);
+    const [ checkedList, setCheckedList ] = useState([]);
+
+    useEffect(() => {
+        if(mode === 1) {
+            setTodoList(...todoList);
+        }
+        
+        if(mode === 2) {
+            //map, filter <- status 1인것만
+            setTodoList( todoList => [...todoList.filter((index, check) => 
+                check === true
+            )]);
+        }
+
+        if(mode === 3) {
+            //map, filter <- status 0인것만
+            setTodoList( todoList => [...todoList.filter((index, check) => 
+                check === false
+            )]);
+        }
+    }, [checkedList]);
+
+    const handleChangeMode = (e) => {
+        if(e.target.name === "listall") {
+            setMode(1);
+        }
+
+        if(e.target.name === "listcheck") {
+            setMode(2);
+        }
+
+        if(e.target.name === "listchecknot") {
+            setMode(3);
+        }
+    }
+
 
     const handleSearchInputChange = (e) => {
         setSearchParams(searchParams => ({
@@ -22,104 +74,62 @@ function MainPage() {
         }))
     }
 
-    const [ todoList, setTodoList ] = useState([]);
-
     const handleRegisterButtonClick = () => {
-            setModalOpen(true);
+        RegisterModal();
     }
 
-    const closeModal = () => {
-        setModalOpen(false);
-    }
-
+    // 다건
     const handleSearchClick = async () => {
         try {
-            const response = await axios.get("http://localhost:8080//todo", searchParams);
+            const response = await axios.get("http://localhost:8080/todo", searchParams);
             setSearchParams({
-                index: 0,
-                todoName: "",
-                updateDate: ""
-            })
+                user_id: 0,
+                todo_name: "",
+                update_date: ""
+            });
             console.log(response);
         } catch(e) {
             console.error(e);
         }
     }
 
-    const handleDeleteClick = (e) => {
+    // 삭제
+    const handleDeleteClick = async (e) => {
+        const response = await axios.delete(`http://localhost:8080/${searchParams.index}`, searchParams)
         setTodoList(todoList => [ ...todoList.filter((searchParams, index) => index !== parseInt(e.target.value)) ])
+        console.log(response);
+    }
+
+    const handleCheckChange = (e, ischecked) => {
+        if(ischecked) {
+            setCheck(check => {
+                return {
+                    ...check,
+                    [e.target.name]: true
+                }
+            });
+            setCheckedList(checkedList => [ ...checkedList, check])
+        }
+
+        if(!ischecked) {
+            setCheck(check => {
+                return {
+                    ...check,
+                    [e.target.name]: false
+                }
+            });
+            setCheckedList(checkedList => [ ...checkedList, check])
+        }
+    }
+
+    const handleLogoutClick = () => {
+        <Link to="/login">
+
+        </Link>
     }
 
     return (
         <div css={s.container}>
-            <ReactModal
-                style={{
-                    content: {
-                        boxSizing: 'border-box',
-                        transform: 'translate(-50%, -50%)',
-                        top: '50%',
-                        left: '50%',
-                        padding: '20px',
-                        width: '400px',
-                        height: '250px',
-                        backgroundColor: '#fafafa'
-                    }
-                }}
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-            >
-                <div css={css`
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    align-items: center;
-                    height: 100%;
-                `}>
-                    <h2>할 일 추가</h2>
-                    <div>
-                        <label htmlFor="">추가할 일</label>
-                        <input type="text" name="add" />
-                    </div>
-                    <div>
-                        <button>등록</button>
-                        <button onClick={closeModal}>취소</button>
-                    </div>
-                </div>
-            </ReactModal>
-            <ReactModal
-                style={{
-                    content: {
-                        boxSizing: 'border-box',
-                        transform: 'translate(-50%, -50%)',
-                        top: '50%',
-                        left: '50%',
-                        padding: '20px',
-                        width: '400px',
-                        height: '250px',
-                        backgroundColor: '#fafafa'
-                    }
-                }}
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-            >
-                <div css={css`
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    align-items: center;
-                    height: 100%;
-                `}>
-                    <h2>할 일 수정</h2>
-                    <div>
-                        <label htmlFor="">수정할 일</label>
-                        <input type="text" name="add" />
-                    </div>
-                    <div>
-                        <button>수정</button>
-                        <button onClick={closeModal}>취소</button>
-                    </div>
-                </div>
-            </ReactModal>
             <div css={s.semi_container}>
                 <div css={s.box1} >
                     <div css={s.box1_sub1}>
@@ -131,14 +141,14 @@ function MainPage() {
                     <div css={s.box1_sub3}>
                         <label htmlFor="">회원정보</label>
                     </div>
-                    <div css={s.box1_sub4}>
+                    <div onClick={handleLogoutClick} css={s.box1_sub4}>
                         <label htmlFor="" className='logout'>로그아웃</label>
                     </div>
                 </div>
                 <div css={s.box2} >
-                    <div css={s.box2_sub1}>전체</div>
-                    <div css={s.box2_sub2}>완료</div>
-                    <div css={s.box2_sub3}>미완료</div>
+                    <div css={s.box2_sub1} name="listall" onClick={() => handleChangeMode()}>전체</div>
+                    <div css={s.box2_sub2} name="listcheck" onClick={() => handleChangeMode()}>완료</div>
+                    <div css={s.box2_sub3} name="listchecknot" onClick={() => handleChangeMode()}>미완료</div>
                     <div css={s.box2_sub4}>
                         <button onClick={handleRegisterButtonClick} css={s.box2_sub4_button}>등록</button>
                     </div>
@@ -146,10 +156,10 @@ function MainPage() {
                 <div css={s.box3}>
                     <div css={s.box3_sub1}>
                         <div css={s.box3_sub1_span1}>
-                            <input type='date' css={s.box3_sub1_date} name='updateDate' onChange={handleSearchInputChange} value={searchParams.updateDate}/>
+                            <input type='date' css={s.box3_sub1_date} name='update_date' onChange={handleSearchInputChange} value={searchParams.updateDate}/>
                         </div>
                         <div css={s.box3_sub1_span2}>
-                            <input type="text" css={s.box3_sub1_input} name='todoName' onChange={handleSearchInputChange} value={searchParams.todoName}/>
+                            <input type="text" css={s.box3_sub1_input} name='todo_name' onChange={handleSearchInputChange} value={searchParams.todoName}/>
                             <button css={s.box3_sub1_button}
                                 onClick={handleSearchClick}>검색</button>
                         </div>
@@ -165,18 +175,27 @@ function MainPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td >
-                                    <input type="checkbox" />
-                                </td>
-                                <td >id</td>
-                                <td ></td>
-                                <td ></td>
-                                <td >
-                                    <button onClick={handleRegisterButtonClick}>수정</button>
-                                    <button onClick={handleDeleteClick} value={searchParams.index}>삭제</button>
-                                </td>
-                            </tr>
+                           {
+                                todoList.map(todo =>
+                                    <tr>
+                                        <td>
+                                            <input 
+                                            id="checked" 
+                                            type="checkbox"
+                                            name="check" 
+                                            checked={check} 
+                                            onChange={handleCheckChange} />
+                                        </td>
+                                        <td>id</td>
+                                        <td>날짜</td>
+                                        <td>할 일</td>
+                                        <td>
+                                            <button onClick={handleRegisterButtonClick}>수정</button>
+                                            <button onClick={handleDeleteClick} value={searchParams.index}>삭제</button>
+                                        </td>
+                                    </tr>
+                                )
+                           }
                         </tbody>
                     </table>
                 </div>
