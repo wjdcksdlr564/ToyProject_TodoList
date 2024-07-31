@@ -24,7 +24,6 @@ function App() {
   return (
     <>
       <Global styles={global}/>
-    
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />

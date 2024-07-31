@@ -41,7 +41,7 @@
     </select>
 
 
-    <select id="findTodoListByTodoId" resultType="com.toyproject.todolist.entity.Todo">
+    <select id="findTodoListByTodoNameAndDate" resultType="com.toyproject.todolist.entity.Todo">
         select
             todo_id as todoId,
             user_id as userId,
@@ -52,6 +52,7 @@
             todo_tb
         where
             todo_name like concat ("%", #{todoName}, "%")
+            and update_date like concat ("%", #{date}, "%")
     </select>
     <select id="findAllTodo" resultType="com.toyproject.todolist.entity.Todo">
         select

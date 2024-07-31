@@ -2,6 +2,7 @@ package com.toyproject.todolist.repository;
 
 import com.toyproject.todolist.entity.Todo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,6 +12,6 @@ public interface TodoMapper {
     int delete(int todoId);
     int updateTodoName(Todo todo);
     Todo findTodoById(int todoId);
-    List<Todo> findTodoListByTodoId(Todo todo);
+    List<Todo> findTodoListByTodoNameAndDate(@Param("todoName") String todoName, @Param("date") String date);
     List<Todo> findAllTodo();
 }

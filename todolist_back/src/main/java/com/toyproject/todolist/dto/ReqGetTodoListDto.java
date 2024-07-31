@@ -2,10 +2,10 @@ package com.toyproject.todolist.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 public class ReqGetTodoListDto {
     private String todoName;
-    // private LocalDateTime updateDate;
+     private String updateDate;
 }
