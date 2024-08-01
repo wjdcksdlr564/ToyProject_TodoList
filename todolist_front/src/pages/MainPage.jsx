@@ -132,6 +132,10 @@ function MainPage() {
         </Link>
     }
 
+    const handleInputProfile = () => {
+        
+    }
+
     return (
         <div css={s.container}>
             <div css={s.semi_container}>

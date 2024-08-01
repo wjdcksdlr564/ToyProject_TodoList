@@ -5,8 +5,10 @@ import * as s from "./Loginstyle"
 import api from '../apis/instance';
 import { useRecoilState } from 'recoil';
 import { authStateAtom } from '../atoms/AuthAtom';
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage(props) {
+    const navigate = useNavigate();
     const [ authState, setAuthState ] = useRecoilState(authStateAtom);
     const [ user, setUser ] = useState({
         username : "",
@@ -26,6 +28,7 @@ function LoginPage(props) {
             const response = await api.post("http://localhost:8080/api/v1/login", user);
             console.log(response.status);
             setAuthState(true);
+            navigate("/");
         } catch (error) {
             console.error(error.response.data);
             alert(error.response.data.message);
