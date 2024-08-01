@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 @Data
 public class ReqGetTodoListDto {
+    private int userId;
     private String todoName;
-     private String updateDate;
+    private String updateDate;
 }

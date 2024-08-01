@@ -8,6 +8,7 @@ import "./MainPageCss.css";
 import ModifyModal from '../components/modifyTodoModal/ModifyModal';
 
 function MainPage() {
+    const [ authUserState, setAuthUserState ] = useRecoilState(authUserStateAtom);
 
     const [ mode, setMode ] = useState(0);
 
@@ -138,7 +139,6 @@ function MainPage() {
 
         </Link>
     }
-
     const handleRegisterButtonClick = () => {
         setRegisterModalOpen(true);
     }
@@ -161,44 +161,44 @@ function MainPage() {
             <div css={s.semi_container}>
                 <div css={s.box1} >
                     <div css={s.box1_sub1}>
-                        로고
+                        <BsList size="40"/>
                     </div>
                     <div css={s.box1_sub2}>
-                        <label htmlFor="">GNB</label>
+                        <label htmlFor=""></label>
                     </div>
                     <div css={s.box1_sub3}>
-                        <label htmlFor="">회원정보</label>
+                        <label htmlFor="">Profile</label>
                     </div>
-                    <div onClick={handleLogoutClick} css={s.box1_sub4}>
-                        <label htmlFor="" className='logout'>로그아웃</label>
+                    <div css={s.box1_sub4}>
+                        <label htmlFor="" className='logout'>Logout</label>
                     </div>
                 </div>
                 <div css={s.box2} >
-                    <div css={s.box2_sub1} onClick={() => handleChangeMode()}>전체</div>
-                    <div css={s.box2_sub2} onClick={() => handleChangeMode()}>완료</div>
-                    <div css={s.box2_sub3} onClick={() => handleChangeMode()}>미완료</div>
+                    <div css={s.box2_sub1}>All</div>
+                    <div css={s.box2_sub2}>Completed</div>
+                    <div css={s.box2_sub3}>Pending</div>
                     <div css={s.box2_sub4}>
-                        <button onClick={handleRegisterButtonClick} css={s.box2_sub4_button}>등록</button>
+                        <button onClick={handleRegisterButtonClick} css={s.box2_sub4_button}>Add</button>
                     </div>
                 </div>
                 <div css={s.box3}>
                     <div css={s.box3_sub1}>
                         <div css={s.box3_sub1_span1}>
-                            <input type='date' css={s.box3_sub1_date} name='update_date' onChange={handleSearchInputChange} value={searchParams.updateDate}/>
+                            <input type='date' css={s.box3_sub1_date} name='updateDate' onChange={handleSearchInputChange} value={searchParams.updateDate} data-placeholder='YYYY-MM-DD'/>
                         </div>
                         <div css={s.box3_sub1_span2}>
-                            <input type="text" css={s.box3_sub1_input} name='todo_name' onChange={handleSearchInputChange} value={searchParams.todoName}/>
+                            <input type="text" css={s.box3_sub1_input} name='todoName' onChange={handleSearchInputChange} value={searchParams.todoName} placeholder='search todo...' />
                             <button css={s.box3_sub1_button}
-                                onClick={handleSearchClick}>검색</button>
+                                onClick={handleSearchClick}>Search</button>
                         </div>
                     </div>
                     <table css={s.box3_sub2}>
                         <thead>
                             <tr>
-                                <th>진행상태</th>
+                                <th>Status</th>
                                 <th>ID</th>
-                                <th>날짜</th>
-                                <th>할 일</th>
+                                <th>Date</th>
+                                <th>Todo</th>
                                 <th>관리</th>
                             </tr>
                         </thead>

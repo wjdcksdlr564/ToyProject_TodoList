@@ -5,10 +5,9 @@ import * as s from "./Loginstyle"
 import api from '../apis/instance';
 import { useRecoilState } from 'recoil';
 import { authStateAtom } from '../atoms/AuthAtom';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage(props) {
-
     const navigate = useNavigate();
     const [ authState, setAuthState ] = useRecoilState(authStateAtom);
     const [ user, setUser ] = useState({
@@ -24,7 +23,6 @@ function LoginPage(props) {
     }
 
     const handleSubmit = async () => {
-
         try {
             console.log(user);
             const response = await api.post("http://localhost:8080/api/v1/login", user);
@@ -46,24 +44,26 @@ function LoginPage(props) {
             <main css={s.mainCotainer}>
                 <div css={s.inputcontainer}>
                     <p css={s.inputText}>
-                        <label htmlFor="">ID: </label>
-                        <input type="text"
+                        <label htmlFor=""></label>
+                        <input type="text" 
                             name='username' 
                             onChange={handleInputChange}
                             value={user.value}
+                            placeholder='username'
                         />
                     </p>
                 </div>
                 <div css={s.inputcontainer}>
                     <p>
-                        <label htmlFor="">PW: </label>
+                        <label htmlFor=""></label>
                         <input type="password"
                             name="password"
                             onChange={handleInputChange}
                             value={user.value}
+                            placeholder='password'
                         />
                     </p>
-                    <span css={s.inputCheck}>PW 확인 메세지</span>
+                    <span css={s.inputCheck}>확인 메세지</span>
                 </div>
                 <p>
                     <button css={s.submitButton} onClick={handleSubmit}>로그인</button>
