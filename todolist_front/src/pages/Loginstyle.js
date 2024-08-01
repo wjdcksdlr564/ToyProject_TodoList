@@ -52,11 +52,12 @@ export const inputcontainer = css`
 `;
 
 export const inputCheck = css`
-    display: none;
-    /* display: flex; */
+    display: flex;
     justify-content: center;
     align-items: center;
+    color: red
 `;
+
 
 export const inputText = css`
     display: flex;
