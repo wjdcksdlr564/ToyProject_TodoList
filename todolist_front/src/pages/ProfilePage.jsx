@@ -16,17 +16,6 @@ function ProfilePage(props) {
         password: ""
     });
 
-    const [ userDetail, setUserDetail ] = useState({
-        userId:"",
-        name:"",
-        email:"",
-    });
-
-    const [ registerUser, setRegisterUser ] = useState({
-        name:"",
-        email:"",
-    })
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUser({ ...user, [name]: value });

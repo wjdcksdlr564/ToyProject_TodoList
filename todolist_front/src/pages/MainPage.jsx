@@ -50,6 +50,10 @@ function MainPage() {
         setTodoList(todoList => [ ...todoList.filter((searchParams, index) => index !== parseInt(e.target.value)) ])
     }
 
+    const handleInputProfile = () => {
+        
+    }
+
     return (
         <div css={s.container}>
             <ReactModal

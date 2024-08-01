@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import { authUserStateAtom } from "./atoms/AuthAtom";
 import { useEffect } from "react";
 import ProfilePage from "./pages/ProfilePage";
+import SignUpPage from "./pages/SignUpPage";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/signup" element={<SignUpPage />} />
       </Routes>
     </>
   );
