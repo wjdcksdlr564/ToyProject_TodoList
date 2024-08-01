@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Todo {
+    private int userId;
     private int todoId;
     private int userId;
     private String todoName;

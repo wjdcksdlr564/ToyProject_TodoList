@@ -1,6 +1,5 @@
 package com.toyproject.todolist.repository;
 
-import com.toyproject.todolist.dto.ReqGetTodoListDto;
 import com.toyproject.todolist.entity.Todo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

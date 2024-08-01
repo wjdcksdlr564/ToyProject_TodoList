@@ -1,8 +1,6 @@
 package com.toyproject.todolist.service;
 import com.toyproject.todolist.dto.*;
 import com.toyproject.todolist.entity.Todo;
-import com.toyproject.todolist.repository.TodoMapper;
-import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TodoServiceImpl implements TodoService {
@@ -56,7 +53,8 @@ public class TodoServiceImpl implements TodoService {
                 .build();
     }
 
-    // 다건 조회
+
+    // 다건조회
     @Override
     public List<RespTodoListDto> getListApi(ReqGetTodoListDto reqDto) {
 //    public List<RespTodoListDto> getListApi(int userId, String todoName, String updateDate) {
@@ -86,6 +84,28 @@ public class TodoServiceImpl implements TodoService {
 
         return respDtos;
     }
+
+
+    // 다건 조회
+    /*@Override
+    public List<RespTodoListDto> getListApi(@PathVariable int userId, @PathVariable String todoName, @PathVariable String updateDate) {
+        List<RespTodoListDto> respDtos = new ArrayList<>();
+
+        // db 에서 가져온 값
+        List<Todo> todos = todoMapper.findTodoListByTodoNameAndDate(userId, todoName, updateDate);
+        for(Todo to : todos) {
+            RespTodoListDto dto = RespTodoListDto.builder()
+                    .todoId(to.getTodoId())
+                    .todoName(to.getTodoName())
+                    .status(to.getStatus())
+                    .updateDate(to.getUpdateDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                    .build();
+
+            respDtos.add(dto);
+        }
+
+        return respDtos;
+    }*/
 
     @Override
     public List<RespGetAllTodoDto> getAllTodo() {
