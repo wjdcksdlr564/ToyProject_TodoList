@@ -5,7 +5,7 @@ export const global = css`
         margin: 0;
         padding: 0;
         height: 100%;
-        background-color: #fafafa;
+        //background-color: #fafafa;
         font-size: 16px;
     } 
 
@@ -17,7 +17,8 @@ export const global = css`
         padding: 0;
         width: 100%;
         height: 100%;
-        background-color: #fafafa;
+        //background-color: #fafafa;
+        background-color: #5da8dd;
     }
 
     label {

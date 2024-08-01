@@ -46,11 +46,17 @@ public class TodoController {
     }
 
     // 다건조회
-    @GetMapping("todos")
+    @GetMapping("/todos")
+    public ResponseEntity<?> getListApi(ReqGetTodoListDto reqDto) {
+        return ResponseEntity.ok().body(todoService.getListApi(reqDto));
+    }
+
+    /*
+    @GetMapping("/todos")
     public ResponseEntity<?> getListApi(@RequestBody ReqGetTodoListDto reqDto) {
         log.info("{}", reqDto);
         return ResponseEntity.ok().body(todoService.getListApi(reqDto));
-    }
+    }*/
 
     // 전체조회
     @GetMapping("/todolist")
