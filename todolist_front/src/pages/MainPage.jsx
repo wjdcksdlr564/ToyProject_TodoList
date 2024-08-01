@@ -10,25 +10,66 @@ import { BsList } from 'react-icons/bs';
 import { PiNotePencilDuotone } from 'react-icons/pi';
 import { MdDeleteOutline } from 'react-icons/md';
 
-
 function MainPage() {
     const [ authUserState, setAuthUserState ] = useRecoilState(authUserStateAtom);
 
-    useEffect(() => {
-        setSearchParams(data => {
-            return {
-                ...searchParams,
-                userId: authUserState.userId
-            }
-        })
-    }, [authUserState]);
-    const [ isModalOpen, setModalOpen ] = useState(false);
-
+    const [ mode, setMode ] = useState(0);
+    
     const [ searchParams, setSearchParams ] = useState({
-        userId: 0,
-        todoName: "",
-        updateDate: ""
+        user_id: 0,
+        todo_name: "",
+        update_date: ""
     });
+    
+    const [ todo, setTodo ] = useState({
+        check: false,
+        user_id: 0,
+        update_date: "",
+        todo_name: ""
+    });
+
+    const [ check, setCheck ] = useState({
+        id: "",
+        check: false
+    });
+
+    const [ todoList, setTodoList ] = useState([]);
+    const [ checkedList, setCheckedList ] = useState([]);
+
+    useEffect(() => {
+        if(mode === 1) {
+            setTodoList(...todoList);
+        }
+        
+        if(mode === 2) {
+            //map, filter <- status 1인것만
+            setTodoList( todoList => [...todoList.filter((index, check) => 
+                check === true
+            )]);
+        }
+
+        if(mode === 3) {
+            //map, filter <- status 0인것만
+            setTodoList( todoList => [...todoList.filter((index, check) => 
+                check === false
+            )]);
+        }
+    }, [checkedList]);
+
+    const handleChangeMode = (e) => {
+        if(e.target.name === "listall") {
+            setMode(1);
+        }
+
+        if(e.target.name === "listcheck") {
+            setMode(2);
+        }
+
+        if(e.target.name === "listchecknot") {
+            setMode(3);
+        }
+    }
+
 
     const handleSearchInputChange = (e) => {
         setSearchParams(searchParams => ({
@@ -37,107 +78,62 @@ function MainPage() {
         }))
     }
 
-    const [ todoList, setTodoList ] = useState([]);
-
     const handleRegisterButtonClick = () => {
-            setModalOpen(true);
+        RegisterModal();
     }
 
-    const closeModal = () => {
-        setModalOpen(false);
-    }
-
-    // 다건 조회
+    // 다건
     const handleSearchClick = async () => {
         try {
-            console.log(searchParams);
-            const response = await axios.get("http://localhost:8080/api/v1/todos", {
-                "params": searchParams
+            const response = await axios.get("http://localhost:8080/todo", searchParams);
+            setSearchParams({
+                user_id: 0,
+                todo_name: "",
+                update_date: ""
             });
-            // setSearchParams({
-            //     ...searchParams,
-            //     todoName: "",
-            //     updateDate: ""
-            // })
             console.log(response);
         } catch(e) {
             console.error(e);
         }
     }
 
-    const handleDeleteClick = (e) => {
+    // 삭제
+    const handleDeleteClick = async (e) => {
+        const response = await axios.delete(`http://localhost:8080/${searchParams.index}`, searchParams)
         setTodoList(todoList => [ ...todoList.filter((searchParams, index) => index !== parseInt(e.target.value)) ])
+        console.log(response);
+    }
+
+    const handleCheckChange = (e, ischecked) => {
+        if(ischecked) {
+            setCheck(check => {
+                return {
+                    ...check,
+                    [e.target.name]: true
+                }
+            });
+            setCheckedList(checkedList => [ ...checkedList, check])
+        }
+
+        if(!ischecked) {
+            setCheck(check => {
+                return {
+                    ...check,
+                    [e.target.name]: false
+                }
+            });
+            setCheckedList(checkedList => [ ...checkedList, check])
+        }
+    }
+
+    const handleLogoutClick = () => {
+        <Link to="/login">
+
+        </Link>
     }
 
     return (
         <div css={s.container}>
-            <ReactModal
-                style={{
-                    content: {
-                        boxSizing: 'border-box',
-                        transform: 'translate(-50%, -50%)',
-                        top: '50%',
-                        left: '50%',
-                        padding: '20px',
-                        width: '400px',
-                        height: '250px',
-                        backgroundColor: '#fafafa'
-                    }
-                }}
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-            >
-                <div css={css`
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    align-items: center;
-                    height: 100%;
-                `}>
-                    <h2>할 일 추가</h2>
-                    <div>
-                        <label htmlFor="">추가할 일</label>
-                        <input type="text" name="add" />
-                    </div>
-                    <div>
-                        <button>등록</button>
-                        <button onClick={closeModal}>취소</button>
-                    </div>
-                </div>
-            </ReactModal>
-            <ReactModal
-                style={{
-                    content: {
-                        boxSizing: 'border-box',
-                        transform: 'translate(-50%, -50%)',
-                        top: '50%',
-                        left: '50%',
-                        padding: '20px',
-                        width: '400px',
-                        height: '250px',
-                        backgroundColor: '#fafafa'
-                    }
-                }}
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-            >
-                <div css={css`
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    align-items: center;
-                    height: 100%;
-                `}>
-                    <h2>Update</h2>
-                    <div>
-                        <input type="text" name="add" placeholder='Add Todo...'/>
-                    </div>
-                    <div>
-                        <button>Ok</button>
-                        <button onClick={closeModal}>Cancel</button>
-                    </div>
-                </div>
-            </ReactModal>
             <div css={s.semi_container}>
                 <div css={s.box1} >
                     <div css={s.box1_sub1}>
