@@ -1,5 +1,6 @@
 package com.toyproject.todolist.controller;
 
+import com.toyproject.todolist.dto.ReqGetTodoDto;
 import com.toyproject.todolist.dto.ReqGetTodoListDto;
 import com.toyproject.todolist.dto.ReqRegisterTodoDto;
 import com.toyproject.todolist.dto.ReqUpdateTodoDto;
@@ -31,7 +32,7 @@ public class TodoController {
         return ResponseEntity.ok().body(todoService.deleteTodo(todoId));
     }
 
-    // todoName 수정
+    // 수정
     @PutMapping("/todo/{todoId}")
     public ResponseEntity<?> modifyTodoNameApi(@PathVariable int todoId, @RequestBody ReqUpdateTodoDto reqDto) {
         log.info("{}", reqDto);
@@ -40,21 +41,22 @@ public class TodoController {
 
     // 단건조회
     @GetMapping("/todo/{todoId}")
-    public ResponseEntity<?> getApi(@PathVariable int todoId) {
-        log.info("{}", todoId);
-        return ResponseEntity.ok().body(todoService.getTodo(todoId));
+    public ResponseEntity<?> getApi(@PathVariable int todoId, ReqGetTodoDto reqDto) {
+        log.info("{}", todoId, reqDto);
+        return ResponseEntity.ok().body(todoService.getTodo(reqDto));
     }
+
 
     // 다건조회
     @GetMapping("/todos")
-    public ResponseEntity<?> getListApi(@RequestBody ReqGetTodoListDto reqDto) {
+    public ResponseEntity<?> getListApi(ReqGetTodoListDto reqDto) {
         log.info("{}", reqDto);
+        System.out.println(reqDto);
         return ResponseEntity.ok().body(todoService.getListApi(reqDto));
     }
 
     // 전체조회
     @GetMapping("/todolist")
-    public ResponseEntity<?> getAllApi() {
-        return ResponseEntity.ok().body(todoService.getAllTodo());
+    public ResponseEntity<?> getAllApi() {return ResponseEntity.ok().body(todoService.getAllTodo());
     }
 }

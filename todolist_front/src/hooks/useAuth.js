@@ -14,7 +14,7 @@ function useAuth() {
         //     status: 200
         // }
 
-        console.log(response);
+        // console.log(response);
 
         if(response.status === 200) {
             setAuthUserState(response.data);

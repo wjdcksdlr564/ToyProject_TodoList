@@ -5,8 +5,9 @@ export const global = css`
         margin: 0;
         padding: 0;
         height: 100%;
-        background-color: #fafafa;
+        //background-color: #fafafa;
         font-size: 16px;
+        color: #1b1b1b;
     } 
 
     #root {
@@ -17,7 +18,8 @@ export const global = css`
         padding: 0;
         width: 100%;
         height: 100%;
-        background-color: #fafafa;
+        //background-color: #fafafa;
+        background-color: #5da8dd;
     }
 
     label {
@@ -26,12 +28,13 @@ export const global = css`
     }
 
     table {
-        border: none;
         border-collapse: collapse;
+        width: 100%;
     }
 
     tr, td {
-        height: 30px;
+        border: none;
+        height: 35px;
     }
 
     th, td {

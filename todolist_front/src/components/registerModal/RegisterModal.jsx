@@ -2,19 +2,17 @@ import { css } from '@emotion/react';
 import axios from 'axios';
 import React, { useState } from 'react';
 import ReactModal from 'react-modal';
+/** @jsxImportSource @emotion/react */
+import * as s from "./style";
 
-const RegisterModal = () => {
+const RegisterModal = ({ registerModalOpen, closeModal }) => {
 
-    const [ isModalOpen, setModalOpen ] = useState(false);
+    const [ openState, setOpenState ] = useState(false);
 
     const [ registerTodo, setRegisterTodo ] = useState({
         user_id: 0,
         todo_name: ""
     });
-
-    const closeModal = () => {
-        setModalOpen(false);
-    }
 
     //등록
     const handleRegister = async (e) => {
@@ -34,19 +32,35 @@ const RegisterModal = () => {
 
     return (
         <>
-            <ReactModal
-            isOpen={true}>
-                <h2>할 일 수정</h2>
+        <ReactModal
+            style={{
+                content: {
+                    boxSizing: 'border-box',
+                    transform: 'translate(-50%, -50%)',
+                    top: '50%',
+                    left: '50%',
+                    padding: '20px',
+                    width: '400px',
+                    height: '400px',
+                    backgroundColor: '#fafafa',
+                }
+            }}
+            isOpen={registerModalOpen}
+            onRequestClose={closeModal}>
+            <div css={s.container}>
+                <h2>할 일 등록</h2>
                 <div>
-                    <label htmlFor="">수정할 일</label>
+                    <label htmlFor="">등록할 일</label>
                     <input type="text" onChange={handleChange} name="todo_name" value={registerTodo.todo_name} />
                 </div>
                 <div>
-                    <button onClick={handleRegister}>수정</button>
+                    <button onClick={handleRegister}>등록</button>
                     <button onClick={closeModal}>취소</button>
                 </div>
-            </ReactModal>
-        </>
+            </div>    
+        </ReactModal>
+        </>    
+        
     );
 }
 

@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Todo {
     private int todoId;
+    private int userId;
     private String todoName;
     private int status;
     private LocalDateTime createDate;

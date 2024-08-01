@@ -7,6 +7,8 @@ import useAuth from "./hooks/useAuth";
 import { useRecoilState } from "recoil";
 import { authUserStateAtom } from "./atoms/AuthAtom";
 import { useEffect } from "react";
+import ProfilePage from "./pages/ProfilePage";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
   const navigate = useNavigate();
@@ -14,9 +16,7 @@ function App() {
   useAuth();
 
   useEffect(() => {
-    if(!!authUserState) {
-      navigate("/");
-    } else {
+    if(!authUserState) {
       navigate("/login");
     }
   }, [authUserState]);
@@ -27,6 +27,8 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/user/profile" element={<ProfilePage />} />
+        <Route path="/signup" element={<SignUpPage />} />
       </Routes>
     </>
   );

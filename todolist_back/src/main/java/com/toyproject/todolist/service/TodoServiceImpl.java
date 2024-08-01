@@ -36,6 +36,7 @@ public class TodoServiceImpl implements TodoService {
     public CommonRespDto modifyTodo(ReqUpdateTodoDto reqDto) {
         Todo todo = Todo.builder()
                     .todoId(reqDto.getTodoId())
+                    .userId(reqDto.getUserId())
                     .todoName(reqDto.getTodoName())
                     .status(reqDto.getStatus())
                     .build();
@@ -44,8 +45,8 @@ public class TodoServiceImpl implements TodoService {
 
     // 단건 조회
     @Override
-    public RespTodoDto getTodo(int todoId) {
-        Todo todo = todoMapper.findTodoById(todoId);
+    public RespTodoDto getTodo(ReqGetTodoDto reqDto) {
+        Todo todo = todoMapper.findTodoById(reqDto.getTodoId(), reqDto.getUserId());
 
         return RespTodoDto.builder()
                 .todoId(todo.getTodoId())
@@ -58,10 +59,18 @@ public class TodoServiceImpl implements TodoService {
     // 다건 조회
     @Override
     public List<RespTodoListDto> getListApi(ReqGetTodoListDto reqDto) {
+//    public List<RespTodoListDto> getListApi(int userId, String todoName, String updateDate) {
+
+//        ReqGetTodoListDto reqDto = ReqGetTodoListDto.builder()
+//                .userId(userId)
+//                .todoName(todoName)
+//                .updateDate(updateDate)
+//                .build();
+
         List<RespTodoListDto> respDtos = new ArrayList<>();
 
         // db 에서 가져온 값
-        List<Todo> todos = todoMapper.findTodoListByTodoNameAndDate(reqDto.getTodoName(), reqDto.getUpdateDate());
+        List<Todo> todos = todoMapper.findTodoListByTodoNameAndDate(reqDto.getUserId(), reqDto.getTodoName(), reqDto.getUpdateDate());
         for(Todo to : todos) {
             RespTodoListDto dto = RespTodoListDto.builder()
                     .todoId(to.getTodoId())
@@ -72,6 +81,8 @@ public class TodoServiceImpl implements TodoService {
 
             respDtos.add(dto);
         }
+
+        System.out.println(todos);
 
         return respDtos;
     }

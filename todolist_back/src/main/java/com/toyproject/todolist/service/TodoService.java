@@ -9,7 +9,7 @@ public interface TodoService {
     CommonRespDto registerTodo(ReqRegisterTodoDto reqDto);
     CommonRespDto deleteTodo(int todoId);
     CommonRespDto modifyTodo(ReqUpdateTodoDto reqDto);
-    RespTodoDto getTodo(int todoId);
+    RespTodoDto getTodo(ReqGetTodoDto reqDto);
     List<RespTodoListDto> getListApi(ReqGetTodoListDto reqDto);
     List<RespGetAllTodoDto> getAllTodo();
 }
