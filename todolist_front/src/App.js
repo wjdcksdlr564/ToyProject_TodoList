@@ -27,11 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
-<<<<<<< HEAD
         <Route path="/user/profile" element={<ProfilePage />} />
-=======
-        <Route path="/profile" element={<ProfilePage />} />
->>>>>>> c3788fa09c6cb55eb3a5f77fa47b1d66a5f73d96
         <Route path="/signup" element={<SignUpPage />} />
       </Routes>
     </>
