@@ -10,7 +10,6 @@ import { useEffect } from "react";
 import ProfilePage from "./pages/ProfilePage";
 import SignUpPage from "./pages/SignUpPage";
 
-
 function App() {
   const navigate = useNavigate();
   const [ authUserState, setAuthUserState ] = useRecoilState(authUserStateAtom);

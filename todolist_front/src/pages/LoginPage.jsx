@@ -66,7 +66,10 @@ function LoginPage(props) {
                     <span css={s.inputCheck}>확인 메세지</span>
                 </div>
                 <p>
-                    <button css={s.submitButton} onClick={handleSubmit}>login</button>
+                    <button css={s.submitButton} onClick={handleSubmit}>로그인</button>
+                </p>
+                <p>
+                    <button css={s.submitButton} >회원가입</button>
                 </p>
             </main>
         </div>

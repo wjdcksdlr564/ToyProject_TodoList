@@ -1,0 +1,7 @@
+.fullhappen {
+    border-bottom: 1px solid black;
+    cursor: pointer;
+    &:hover {
+        background-color: #dbdbdb;
+    }
+}

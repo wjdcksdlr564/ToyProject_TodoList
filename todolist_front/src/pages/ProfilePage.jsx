@@ -9,7 +9,6 @@ import { authStateAtom, authUserStateAtom } from '../atoms/AuthAtom';
 
 function ProfilePage(props) {
     const [ authUserState, setAuthUserState ] = useRecoilState(authUserStateAtom);
-
     const [user, setUser] = useState({
         name: "",
         email: "",
@@ -29,7 +28,6 @@ function ProfilePage(props) {
         console.log("취소 버튼 클릭됨");
         window.history.back(-1);
     }
-
 
     return (
         <div css={s.container}>

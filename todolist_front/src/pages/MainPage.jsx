@@ -2,18 +2,18 @@ import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as s from "./Mainstyle";
 import axios from 'axios';
-import ReactModal from 'react-modal';
-import { css } from '@emotion/react';
-import { useRecoilState } from 'recoil';
-import { authUserStateAtom } from '../atoms/AuthAtom';
-import { BsList } from 'react-icons/bs';
-import { PiNotePencilDuotone } from 'react-icons/pi';
-import { MdDeleteOutline } from 'react-icons/md';
+import RegisterModal from '../components/registerModal/RegisterModal';
+import { Link } from 'react-router-dom';
+import "./MainPageCss.css";
+import ModifyModal from '../components/modifyTodoModal/ModifyModal';
 
 function MainPage() {
     const [ authUserState, setAuthUserState ] = useRecoilState(authUserStateAtom);
 
     const [ mode, setMode ] = useState(0);
+
+    const [ registerModalOpen, setRegisterModalOpen ] = useState(false);
+    const [ modifyModalOpen, setModifyModalOpen ] = useState(false);
     
     const [ searchParams, setSearchParams ] = useState({
         user_id: 0,
@@ -56,17 +56,29 @@ function MainPage() {
         }
     }, [checkedList]);
 
+    // useEffect(() => {
+    //     setRegisterModalOpen();
+        
+    // }, [registerModalOpen]);
+
     const handleChangeMode = (e) => {
+
         if(e.target.name === "listall") {
             setMode(1);
         }
 
         if(e.target.name === "listcheck") {
             setMode(2);
+            document.getElementById('b').classList.add('fullhappen');
+            document.getElementById('c').classList.remove('fullhappen');
+            document.getElementById('d').classList.add('fullhappen');
         }
 
         if(e.target.name === "listchecknot") {
             setMode(3);
+            document.getElementById('b').classList.add('fullhappen');
+            document.getElementById('c').classList.add('fullhappen');
+            document.getElementById('d').classList.remove('fullhappen');
         }
     }
 
@@ -76,10 +88,6 @@ function MainPage() {
             ...searchParams,
             [e.target.name]: e.target.value
         }))
-    }
-
-    const handleRegisterButtonClick = () => {
-        RegisterModal();
     }
 
     // 다건
@@ -131,13 +139,25 @@ function MainPage() {
 
         </Link>
     }
-
-    const handleInputProfile = () => {
-        
+    const handleRegisterButtonClick = () => {
+        setRegisterModalOpen(true);
     }
 
+    const handleModifyModalOpen = () => {
+        setModifyModalOpen(true);
+    }
+
+    const closeModal = () => {
+        setModifyModalOpen(false);
+        setRegisterModalOpen(false);
+    }
+
+  
     return (
-        <div css={s.container}>
+        <>
+            <RegisterModal registerModalOpen={registerModalOpen} closeModal={closeModal} ></RegisterModal>
+            <ModifyModal modifyModalOpen={modifyModalOpen} setModifyModalOpen={setModifyModalOpen}></ModifyModal>
+            <div css={s.container}>
             <div css={s.semi_container}>
                 <div css={s.box1} >
                     <div css={s.box1_sub1}>
@@ -183,27 +203,34 @@ function MainPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td >
-                                    <input type="checkbox" />
-                                </td>
-                                <td ></td>
-                                <td ></td>
-                                <td ></td>
-                                <td >
-                                    
-                                    <label htmlFor="" for="up"> <PiNotePencilDuotone /> </label>
-                                    <button onClick={handleRegisterButtonClick} id="up">update</button>
-
-                                    <label htmlFor="" for="del"> <MdDeleteOutline /> </label>
-                                    <button onClick={handleDeleteClick} id='del' value={searchParams.index}>delete</button>
-                                </td>
-                            </tr>
+                           {
+                                todoList.map(todo =>
+                                    <tr>
+                                        <td>
+                                            <input 
+                                            id="checked" 
+                                            type="checkbox"
+                                            name="check" 
+                                            checked={check} 
+                                            onChange={handleCheckChange} />
+                                        </td>
+                                        <td>id</td>
+                                        <td>날짜</td>
+                                        <td>할 일</td>
+                                        <td>
+                                            <button onClick={handleModifyModalOpen}>수정</button>
+                                            <button onClick={handleDeleteClick} value={searchParams.index}>삭제</button>
+                                        </td>
+                                    </tr>
+                                )
+                           }
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+        </>
+        
     );
 }
 
