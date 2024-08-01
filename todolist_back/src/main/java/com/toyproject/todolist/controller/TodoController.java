@@ -47,8 +47,7 @@ public class TodoController {
 
     // 다건조회
     @GetMapping("/todos")
-    public ResponseEntity<?> getListApi(@RequestBody ReqGetTodoListDto reqDto) {
-        log.info("{}", reqDto);
+    public ResponseEntity<?> getListApi(ReqGetTodoListDto reqDto) {
         return ResponseEntity.ok().body(todoService.getListApi(reqDto));
     }
 

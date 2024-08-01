@@ -4,10 +4,14 @@ import * as s from "./Mainstyle";
 import axios from 'axios';
 import ReactModal from 'react-modal';
 import { css } from '@emotion/react';
-import RegisterModal from '../hooks/RegisterModal';
-import { Link } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { authUserStateAtom } from '../atoms/AuthAtom';
+import { BsList } from 'react-icons/bs';
+import { PiNotePencilDuotone } from 'react-icons/pi';
+import { MdDeleteOutline } from 'react-icons/md';
 
 function MainPage() {
+    const [ authUserState, setAuthUserState ] = useRecoilState(authUserStateAtom);
 
     const [ mode, setMode ] = useState(0);
     
@@ -133,69 +137,64 @@ function MainPage() {
             <div css={s.semi_container}>
                 <div css={s.box1} >
                     <div css={s.box1_sub1}>
-                        로고
+                        <BsList size="40"/>
                     </div>
                     <div css={s.box1_sub2}>
-                        <label htmlFor="">GNB</label>
+                        <label htmlFor=""></label>
                     </div>
                     <div css={s.box1_sub3}>
-                        <label htmlFor="">회원정보</label>
+                        <label htmlFor="">Profile</label>
                     </div>
-                    <div onClick={handleLogoutClick} css={s.box1_sub4}>
-                        <label htmlFor="" className='logout'>로그아웃</label>
+                    <div css={s.box1_sub4}>
+                        <label htmlFor="" className='logout'>Logout</label>
                     </div>
                 </div>
                 <div css={s.box2} >
-                    <div css={s.box2_sub1} name="listall" onClick={() => handleChangeMode()}>전체</div>
-                    <div css={s.box2_sub2} name="listcheck" onClick={() => handleChangeMode()}>완료</div>
-                    <div css={s.box2_sub3} name="listchecknot" onClick={() => handleChangeMode()}>미완료</div>
+                    <div css={s.box2_sub1}>All</div>
+                    <div css={s.box2_sub2}>Completed</div>
+                    <div css={s.box2_sub3}>Pending</div>
                     <div css={s.box2_sub4}>
-                        <button onClick={handleRegisterButtonClick} css={s.box2_sub4_button}>등록</button>
+                        <button onClick={handleRegisterButtonClick} css={s.box2_sub4_button}>Add</button>
                     </div>
                 </div>
                 <div css={s.box3}>
                     <div css={s.box3_sub1}>
                         <div css={s.box3_sub1_span1}>
-                            <input type='date' css={s.box3_sub1_date} name='update_date' onChange={handleSearchInputChange} value={searchParams.updateDate}/>
+                            <input type='date' css={s.box3_sub1_date} name='updateDate' onChange={handleSearchInputChange} value={searchParams.updateDate} data-placeholder='YYYY-MM-DD'/>
                         </div>
                         <div css={s.box3_sub1_span2}>
-                            <input type="text" css={s.box3_sub1_input} name='todo_name' onChange={handleSearchInputChange} value={searchParams.todoName}/>
+                            <input type="text" css={s.box3_sub1_input} name='todoName' onChange={handleSearchInputChange} value={searchParams.todoName} placeholder='search todo...' />
                             <button css={s.box3_sub1_button}
-                                onClick={handleSearchClick}>검색</button>
+                                onClick={handleSearchClick}>Search</button>
                         </div>
                     </div>
                     <table css={s.box3_sub2}>
                         <thead>
                             <tr>
-                                <th>진행상태</th>
+                                <th>Status</th>
                                 <th>ID</th>
-                                <th>날짜</th>
-                                <th>할 일</th>
+                                <th>Date</th>
+                                <th>Todo</th>
                                 <th>관리</th>
                             </tr>
                         </thead>
                         <tbody>
-                           {
-                                todoList.map(todo =>
-                                    <tr>
-                                        <td>
-                                            <input 
-                                            id="checked" 
-                                            type="checkbox"
-                                            name="check" 
-                                            checked={check} 
-                                            onChange={handleCheckChange} />
-                                        </td>
-                                        <td>id</td>
-                                        <td>날짜</td>
-                                        <td>할 일</td>
-                                        <td>
-                                            <button onClick={handleRegisterButtonClick}>수정</button>
-                                            <button onClick={handleDeleteClick} value={searchParams.index}>삭제</button>
-                                        </td>
-                                    </tr>
-                                )
-                           }
+                            <tr>
+                                <td >
+                                    <input type="checkbox" />
+                                </td>
+                                <td ></td>
+                                <td ></td>
+                                <td ></td>
+                                <td >
+                                    
+                                    <label htmlFor="" for="up"> <PiNotePencilDuotone /> </label>
+                                    <button onClick={handleRegisterButtonClick} id="up">update</button>
+
+                                    <label htmlFor="" for="del"> <MdDeleteOutline /> </label>
+                                    <button onClick={handleDeleteClick} id='del' value={searchParams.index}>delete</button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
