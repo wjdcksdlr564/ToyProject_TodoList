@@ -69,6 +69,11 @@ export const box1_sub4 =  css`
     flex-grow: 1;
     text-align: center;
     line-height: 78px;
+
+    label:hover {
+        font-weight: 800;
+        cursor: pointer;
+    }
 `;
 
 export const box2 = css`
@@ -114,8 +119,8 @@ export const box2_sub1 = css`
 
 export const box2_sub2 = css`
     box-sizing: border-box;
-    //border: 1px solid black;
-    border: none;
+    border: 1px solid black;
+    /* border: none; */
     text-align: center;
     transform: translateY(1px);
     line-height: 26px;
@@ -150,6 +155,7 @@ export const box2_sub3 = css`
     margin: 30px 0 0 0;
     padding: 2px;
     font-size: 13px;
+    background-color: #9dcbec;
     cursor: pointer;
     &:active {
         border-bottom: none;
@@ -284,12 +290,9 @@ export const box3_sub2 = css`
 `;
 
 export const tableHeader = css`
-    /* width: 100%; */
 `;
 
 export const tableTr = css`
-    /* display: flex;
-
     th:nth-of-type(1){
         width: 100px;
     }
@@ -305,7 +308,7 @@ export const tableTr = css`
     }
     th:nth-of-type(5){
         width: 300px;
-    } */
+    }
 `;
 
 export const tableBody = css`
@@ -337,7 +340,6 @@ export const managementButton = css`
     align-items: center;
     border-top: none;
     border-bottom: 1px solid black;
-    /* transform: translateY(0.635px); */
 
     label{
         cursor: pointer;

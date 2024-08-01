@@ -15,6 +15,9 @@ function LoginPage(props) {
         username : "",
         password : ""
     });
+    const [ loginMessage, setLoginMessage ] = useState({
+        message: ""
+    });
 
     const handleInputChange = (e) => {
         setUser(user => ({
@@ -30,10 +33,11 @@ function LoginPage(props) {
             const response = await api.post("http://localhost:8080/api/v1/login", user);
             // console.log(response.status);
             setAuthState(true);
+            alert(response.data.message)
             navigate("/");
         } catch (error) {
-            console.error(error.response.data);
-            alert(error.response.data.message);
+            // console.error(error.response.data);
+            setLoginMessage(error.response.data);
         }
     }
     
@@ -63,7 +67,7 @@ function LoginPage(props) {
                             placeholder='password'
                         />
                     </p>
-                    <span css={s.inputCheck}>Confirm</span>
+                    <span css={s.inputCheck}>{loginMessage.message}</span>
                 </div>
                 <p>
                     <button css={s.submitButton} onClick={handleSubmit}>Login</button>

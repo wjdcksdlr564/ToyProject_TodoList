@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as s from "./Mainstyle";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { authUserStateAtom } from '../atoms/AuthAtom';
 import api from '../apis/instance';
@@ -10,8 +10,10 @@ import RegisterModal from '../components/registerModal/RegisterModal';
 import ModifyModal from '../components/modifyTodoModal/ModifyModal';
 import { PiNotePencilDuotone } from 'react-icons/pi';
 import { MdDeleteOutline } from 'react-icons/md';
+import { css } from '@emotion/react';
 
 function MainPage() {
+    const navigate = useNavigate();
     let today = new Date();
     let year = today.getFullYear(); // 년도
     let month = today.getMonth() + 1;
@@ -24,7 +26,6 @@ function MainPage() {
     }
     const todayDate = year + "-" + month + "-" + date;
 
-    // 훅에서 우째 가져와서 쓸지 모르겠음...
     const [ authUserState, setAuthUserState ] = useRecoilState(authUserStateAtom);
     useEffect(() => {
         if(!!authUserState?.userId){
@@ -34,7 +35,7 @@ function MainPage() {
                     userId: authUserState?.userId
                 }
             });
-            console.log(authUserState);
+            // console.log(authUserState);
         }
     }, [authUserState]);
 
@@ -48,12 +49,21 @@ function MainPage() {
     const [ todoList, setTodoList ] = useState([]);
     const [ mode, setMode ] = useState(0);
 
-    const [ registerModalOpen, setRegisterModalOpen ] = useState(false);
-    const [ modifyModalOpen, setModifyModalOpen ] = useState(false);
+    const [ registerModalOpen, setRegisterModalOpen ] = useState({
+        userId: 0,
+        isOpen : false
+    });
+    const [ modifyModalOpen, setModifyModalOpen ] = useState({
+        userId: 0,
+        todoId: 0,
+        todoName: "",
+        isOpen: false,
+        status : 0
+    });
 
     useEffect( () => {
         const defaultTodoList = async () => {
-            console.log(searchParams);
+            // console.log(searchParams);
             try {
                 const response = await api.get("http://localhost:8080/api/v1/todos", {params: searchParams});
                 setTodoList(response.data);
@@ -86,8 +96,7 @@ function MainPage() {
         }
     }, [mode, allTodoList]);
 
-
-    const handleMenuClick = (value) => {
+    const handleMenuClick = (e, value) => {
         if(value === "allList") {
             // console.log("전체 선택");
             setMode(1);
@@ -173,29 +182,49 @@ function MainPage() {
         }
     }
 
-    const handleLogoutClick = () => {
-        <Link to="/login">
-
-        </Link>
+    const handleLogoutClick = async () => {
+        try{
+            const response = await api.post(`http://localhost:8080/api/v1/logout`);
+            console.log(response.data);
+            alert("로그아웃 되셨습니다.");
+            navigate('/login');
+        } catch (e) {
+            console.error(e);
+        }
     }
 
-    const handleRegisterButtonClick = () => {
-        setRegisterModalOpen(true);
+    const handleRegisterButtonClick = (todoId) => {
+        setRegisterModalOpen({
+            userId: searchParams.userId,
+            isOpen: true
+        });
     }
 
-    const handleModifyModalOpen = () => {
-        setModifyModalOpen(true);
+    const handleModifyModalOpen = (todoId, todoName, status) => {
+        setModifyModalOpen({
+            todoId: todoId,
+            userId: searchParams.userId,
+            todoName: todoName,
+            isOpen: true,
+            status: status
+        });
     }
 
     const closeModal = () => {
-        setModifyModalOpen(false);
-        setRegisterModalOpen(false);
+        setModifyModalOpen(data => ({
+            ...data,
+            isOpen : false
+        }));
+        setRegisterModalOpen(data => ({
+            ...data,
+            isOpen : false
+        }));
     }
 
     return (
         <>
-            <RegisterModal registerModalOpen={registerModalOpen} closeModal={closeModal} ></RegisterModal>
-            <ModifyModal modifyModalOpen={modifyModalOpen} closeModal={closeModal}></ModifyModal>
+            <RegisterModal registerModalOpen={registerModalOpen} closeModal={closeModal} setMode={setMode} ></RegisterModal>
+            <ModifyModal modifyModalOpen={modifyModalOpen} closeModal={closeModal} setMode={setMode}></ModifyModal>
             <div css={s.container}>
                 <div css={s.semi_container}>
                     <div css={s.box1} >
@@ -209,13 +238,13 @@ function MainPage() {
                             <label htmlFor="">Profile</label>
                         </div>
                         <div css={s.box1_sub4}>
-                            <label htmlFor="" className='logout' onClick={handleLogoutClick}>Logout</label>
+                            <label htmlFor="" onClick={handleLogoutClick}>Logout</label>
                         </div>
                     </div>
                     <div css={s.box2} >
-                        <p css={s.box2_sub1} onClick={() => handleMenuClick("allList")}>All</p>
-                        <p css={s.box2_sub2} onClick={() => handleMenuClick("completedList")}>Completed</p>
-                        <p css={s.box2_sub3} onClick={() => handleMenuClick("uncompletedList")}>Pending</p>
+                        <p css={mode === 1? s.box2_sub3 : s.box2_sub2} onClick={(e) => handleMenuClick(e, "allList")}>All</p>
+                        <p css={mode === 2? s.box2_sub3 : s.box2_sub2} onClick={(e) => handleMenuClick(e, "completedList")}>Completed</p>
+                        <p css={mode === 3? s.box2_sub3 : s.box2_sub2} onClick={(e) => handleMenuClick(e, "uncompletedList")}>Pending</p>
                         <p css={s.box2_sub4}>
                             <button onClick={handleRegisterButtonClick} css={s.box2_sub4_button}>Add</button>
                         </p>
@@ -236,7 +265,7 @@ function MainPage() {
                                 <tr css={s.tableTr}>
                                     <th>Status</th>
                                     <th>ID</th>
-                                    <th>Date</th>
+                                    <th>Updata Date</th>
                                     <th>Todo</th>
                                     <th>Management</th>
                                 </tr>
@@ -259,7 +288,7 @@ function MainPage() {
                                             <td>{todo.todoName}</td>
                                             <td css={s.managementButton}>
                                                 <p>
-                                                    <label htmlFor="" onClick={() => handleModifyModalOpen(todo.todoId)}><PiNotePencilDuotone size="25" /></label>
+                                                    <label htmlFor="" onClick={() => handleModifyModalOpen(todo.todoId, todo.todoName, todo.status)}><PiNotePencilDuotone size="25" /></label>
                                                     <button>Update</button>
                                                 </p>
                                                 <p>
