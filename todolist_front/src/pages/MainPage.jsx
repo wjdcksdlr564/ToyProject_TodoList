@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as s from "./Mainstyle";
 import axios from 'axios';
-import ReactModal from 'react-modal';
-import { css } from '@emotion/react';
-import RegisterModal from '../hooks/RegisterModal';
+import RegisterModal from '../components/registerModal/RegisterModal';
 import { Link } from 'react-router-dom';
+import "./MainPageCss.css";
+import ModifyModal from '../components/modifyTodoModal/ModifyModal';
 
 function MainPage() {
 
     const [ mode, setMode ] = useState(0);
+
+    const [ registerModalOpen, setRegisterModalOpen ] = useState(false);
+    const [ modifyModalOpen, setModifyModalOpen ] = useState(false);
     
     const [ searchParams, setSearchParams ] = useState({
         user_id: 0,
@@ -52,17 +55,29 @@ function MainPage() {
         }
     }, [checkedList]);
 
+    // useEffect(() => {
+    //     setRegisterModalOpen();
+        
+    // }, [registerModalOpen]);
+
     const handleChangeMode = (e) => {
+
         if(e.target.name === "listall") {
             setMode(1);
         }
 
         if(e.target.name === "listcheck") {
             setMode(2);
+            document.getElementById('b').classList.add('fullhappen');
+            document.getElementById('c').classList.remove('fullhappen');
+            document.getElementById('d').classList.add('fullhappen');
         }
 
         if(e.target.name === "listchecknot") {
             setMode(3);
+            document.getElementById('b').classList.add('fullhappen');
+            document.getElementById('c').classList.add('fullhappen');
+            document.getElementById('d').classList.remove('fullhappen');
         }
     }
 
@@ -72,10 +87,6 @@ function MainPage() {
             ...searchParams,
             [e.target.name]: e.target.value
         }))
-    }
-
-    const handleRegisterButtonClick = () => {
-        RegisterModal();
     }
 
     // 다건
@@ -128,8 +139,25 @@ function MainPage() {
         </Link>
     }
 
+    const handleRegisterButtonClick = () => {
+        setRegisterModalOpen(true);
+    }
+
+    const handleModifyModalOpen = () => {
+        setModifyModalOpen(true);
+    }
+
+    const closeModal = () => {
+        setModifyModalOpen(false);
+        setRegisterModalOpen(false);
+    }
+
+  
     return (
-        <div css={s.container}>
+        <>
+            <RegisterModal registerModalOpen={registerModalOpen} closeModal={closeModal} ></RegisterModal>
+            <ModifyModal modifyModalOpen={modifyModalOpen} setModifyModalOpen={setModifyModalOpen}></ModifyModal>
+            <div css={s.container}>
             <div css={s.semi_container}>
                 <div css={s.box1} >
                     <div css={s.box1_sub1}>
@@ -146,9 +174,9 @@ function MainPage() {
                     </div>
                 </div>
                 <div css={s.box2} >
-                    <div css={s.box2_sub1} name="listall" onClick={() => handleChangeMode()}>전체</div>
-                    <div css={s.box2_sub2} name="listcheck" onClick={() => handleChangeMode()}>완료</div>
-                    <div css={s.box2_sub3} name="listchecknot" onClick={() => handleChangeMode()}>미완료</div>
+                    <div css={s.box2_sub1} onClick={() => handleChangeMode()}>전체</div>
+                    <div css={s.box2_sub2} onClick={() => handleChangeMode()}>완료</div>
+                    <div css={s.box2_sub3} onClick={() => handleChangeMode()}>미완료</div>
                     <div css={s.box2_sub4}>
                         <button onClick={handleRegisterButtonClick} css={s.box2_sub4_button}>등록</button>
                     </div>
@@ -190,7 +218,7 @@ function MainPage() {
                                         <td>날짜</td>
                                         <td>할 일</td>
                                         <td>
-                                            <button onClick={handleRegisterButtonClick}>수정</button>
+                                            <button onClick={handleModifyModalOpen}>수정</button>
                                             <button onClick={handleDeleteClick} value={searchParams.index}>삭제</button>
                                         </td>
                                     </tr>
@@ -201,6 +229,8 @@ function MainPage() {
                 </div>
             </div>
         </div>
+        </>
+        
     );
 }
 

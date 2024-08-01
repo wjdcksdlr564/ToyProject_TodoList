@@ -95,14 +95,6 @@ export const box2_sub2 = css`
     height: 30px;
     margin: 30px 0 0 0;
     padding: 2px;
-    cursor: pointer;
-    &:active {
-        border-bottom: none;
-    }
-    &:hover {
-        background-color: #dbdbdb;
-        padding: auto;
-    }
 `;
 
 export const box2_sub3 = css`
@@ -115,14 +107,6 @@ export const box2_sub3 = css`
     height: 30px;
     margin: 30px 0 0 0;
     padding: 2px;
-    cursor: pointer;
-    &:active {
-        border-bottom: none;
-    }
-    &:hover {
-        background-color: #dbdbdb;
-        padding: auto;
-    }
 `;
 
 export const box2_sub4 = css`

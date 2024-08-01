@@ -5,8 +5,11 @@ import * as s from "./Loginstyle"
 import api from '../apis/instance';
 import { useRecoilState } from 'recoil';
 import { authStateAtom } from '../atoms/AuthAtom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function LoginPage(props) {
+
+    const navigate = useNavigate();
     const [ authState, setAuthState ] = useRecoilState(authStateAtom);
     const [ user, setUser ] = useState({
         username : "",
@@ -27,6 +30,7 @@ function LoginPage(props) {
             const response = await api.post("http://localhost:8080/api/v1/login", user);
             console.log(response.status);
             setAuthState(true);
+            navigate("/");
         } catch (error) {
             console.error(error.response.data);
             alert(error.response.data.message);
@@ -62,7 +66,10 @@ function LoginPage(props) {
                     <span css={s.inputCheck}>PW 확인 메세지</span>
                 </div>
                 <p>
-                    <button css={s.submitButton} onClick={handleSubmit}>완료</button>
+                    <button css={s.submitButton} onClick={handleSubmit}>로그인</button>
+                </p>
+                <p>
+                    <button css={s.submitButton} >회원가입</button>
                 </p>
             </main>
         </div>
