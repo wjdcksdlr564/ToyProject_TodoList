@@ -62,7 +62,7 @@ const ModifyModal = ({ modifyModalOpen, closeModal, setRefresh }) => {
                 onRequestClose={closeModal.isOpen}
                 ariaHideApp={false}>
                 <div css={s.container}>
-                    <h2>Update Todo: </h2>
+                    <h2>Update Todo </h2>
                     <div css={s.container_sub1}>
                         <label htmlFor=""></label>
                         <input type="text" onChange={handleInputChange} name="todoName" value={modifyTodo.todoName} placeholder={"before: " + modifyModalOpen.todoName}/>

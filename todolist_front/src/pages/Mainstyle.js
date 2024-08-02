@@ -53,6 +53,7 @@ export const box1_sub1 =  css`
 `;
 
 export const box1_sub2 =  css`
+    margin-left: 150px;
     text-align: center;
     line-height: 78px;
     border: none;
@@ -85,110 +86,64 @@ export const box1_sub4 =  css`
 export const box2 = css`
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     box-sizing: border-box;
     border: none;
+    padding: 10px;
     width: 100%;
-    height: 60px;
-    margin: 0;
-    padding: 0;
-    /*div:nth-of-type(1){
-        border-width: 1px;
-        border-color: black;
+    height: 50px;
+`;
+
+export const box2_sub = css`
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+
+    p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        width: 100px;
+        height: 60px;
+        font-size: 16px;
+        line-height: 26px;
+        transform: translateY(1px);
+        cursor: pointer;
+
+        &:hover {
+        font-size: 18px;
+        background-color: #8ebfe3;
+        padding: auto;
+        }
+
+        &:active {
+        border:1px solid #8ebfe3;
+        border-bottom: none;
+        color: black;
+        }
+
+        &:focus {
+            border: 1px solid black;
+            border-bottom: none;
+            border-right: none;
+        }
     }
-    div:nth-of-type(2){
-        //border-width: 0 1px 0;
-        color: #dbdbdb;
-    }
-    div:nth-of-type(3){
-        border-width: 0px;
-        color: #dbdbdb;
-    }*/
 `;
 
 export const box2_sub1 = css`
-    box-sizing: border-box;
-    border: none;
     border-bottom: 1px solid black;
-    text-align: center;
-    transform: translateY(1px);
-    line-height: 26px;
-    width: 80px;
-    height: 30px;
-    margin: 30px 0 0 0;
-    padding: 2px;
     font-weight: 700;
-    font-size: 14px;
-    cursor:pointer;
-    &:focus {
-        border: 1px solid black;
-        border-bottom: none;
-        border-right: none;
-    }
 `;
 
-export const box2_sub2 = css`
-    box-sizing: border-box;
-    // border: 1px solid black;
-    // border: none; 
-    /* border-bottom: 1px solid black; */
-    text-align: center;
-    transform: translateY(1px);
-    line-height: 26px;
-    width: 70px;
-    height: 30px;
-    margin: 30px 0 0 0;
-    padding: 2px;
-    font-size: 13px;
-    cursor: pointer;
-    &:active {
-        border:1px solid black;
-        border-bottom: none;
-        color: black;
-    }
-    &:hover {
-        background-color: #dbdbdb;
-        padding: auto;
-    }
-`;
-
-export const box2_sub3 = css`
-    box-sizing: border-box;
-    //border: 1px solid black;
-    text-align: center;
-    transform: translateY(1px);
-    line-height: 26px;
-    width: 70px;
-    height: 30px;
-    margin: 30px 0 0 0;
-    padding: 2px;
-    font-size: 13px;
-    background-color: #9dcbec;
-    cursor: pointer;
-    &:active {
-        border-bottom: none;
-    }
-    &:hover {
-        background-color: #dbdbdb;
-        padding: auto;
-    }
-`;
-
-export const box2_sub4 = css`
-    display: flex;
-    justify-content: end;
-    box-sizing: border-box;
-    flex-grow: 1;
-    height: 45px;
-    margin: 7.5px 0;
-    padding-right: 30px;
-    padding-top: 10px;
+export const box2_sub_1 = css`
+    margin-right: 20px;
 `;
 
 export const box2_sub4_button = css`
-    box-sizing: border-box;
-    border: 1px soild black;
     width: 90px;
-    height: 47px;
+    height: 45px;
     border-radius: 30px;
     background-color: #5da8dd;
     color: white;
@@ -208,22 +163,17 @@ export const box3 = css`
     border: none;
     width: 100%;
     //flex-grow: 1;
-    margin: 0;
-    padding: 0;
-    overflow-y: auto;
 `;
 
 export const box3_sub1 = css`
     box-sizing: border-box;
-    //border: 1px solid black;
-    border-bottom: none;
-    border-top: none;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    margin-top: 10px;
     width: 100%;
-    height: 80px;
+    height: 60px;
     
 `;
 
@@ -286,15 +236,16 @@ export const box3_sub1_button = css`
         color: white;
     }
 `;
+export const tableCotainer = css`
+    padding: 10px;
+`;
 
 export const box3_sub2 = css`
     box-sizing: border-box;
     border: none;
-    //border-left: 1px solid black;
     border-top: 3px solid #166caa;
-    width: 98%;
+    width: 100%;
     height: 100%;
-    flex-grow: 1;
     background-color: white;
     button {
         display: none;
@@ -306,61 +257,119 @@ export const tableHeader = css`
 `;
 
 export const tableTr = css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #166caa;
+    th {
+        border: none
+    }
     th:nth-of-type(1){
-        border: none;
         width: 100px;
     }
     th:nth-of-type(2){
-        border: none;
         width: 100px;
     }
     th:nth-of-type(3){
-        border: none;
         width: 200px;
     }
     th:nth-of-type(4){
-        border: none;
         flex-grow: 1;
         width: 400px;
     }
     th:nth-of-type(5){
-        border: none;
-        width: 300px;
-    }
-`;
-
-export const tableBody = css`
-    /* width: 100%; */
-`;
-
-
-export const logo = {
-    icon: <BsList />
-};
-
-export const up = {
-    icon: <PiNotePencilDuotone />
-}
-
-export const del = {
-    icon: <MdDeleteOutline />
-}
-
-export const pendingSelectedItem = css`
-    &:hover {
-        font-weight: 800;
+        width: 200px;
     }
 `;
 
 export const completedSelectedItem = css`
-    text-decoration: line-through;
+    &:hover {
+        text-decoration: line-through;
+    }
+`;
+
+export const tableBody = css`
+    margin-top: 10px;
+    width: 100%;
+    height: 700px;
+    overflow-y: auto;
+    ::-webkit-scrollbar {
+        display: none;
+    }
+`;
+
+export const tableItem = css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border: none;
+
+    td {
+        border: none
+    }
+    td:nth-of-type(1){
+        width: 100px;
+    }
+    td:nth-of-type(2){
+        width: 100px;
+    }
+    td:nth-of-type(3){
+        width: 200px;
+    }
+    td:nth-of-type(4){
+        flex-grow: 1;
+        width: 400px;
+    }
+    td:nth-of-type(5){
+        width: 200px;
+    }
+
+
     &:hover {
         font-weight: 800;
     }
-    input {
+    /* input {
         display: none;
+    } */
+`;
+
+export const selectedItem = css`
+display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border: none;
+
+    td {
+        border: none
+    }
+    td:nth-of-type(1){
+        width: 100px;
+    }
+    td:nth-of-type(2){
+        width: 100px;
+    }
+    td:nth-of-type(3){
+        width: 200px;
+    }
+    td:nth-of-type(4){
+        flex-grow: 1;
+        width: 400px;
+    }
+    td:nth-of-type(5){
+        width: 200px;
     }
 
+
+    &:hover {
+        font-weight: 800;
+    }
+    /* input {
+        display: none;
+    } */
+    
+    text-decoration: line-through;
 `;
 
 export const managementButton = css`

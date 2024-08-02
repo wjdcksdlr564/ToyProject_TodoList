@@ -265,10 +265,12 @@ function MainPage() {
                         </div>
                     </div>
                     <div css={s.box2} >
-                        <p css={mode === 1? s.box2_sub1 : s.box2_sub2} onClick={(e) => handleMenuClick(e, "allList")}>All</p>
-                        <p css={mode === 2? s.box2_sub1 : s.box2_sub2} onClick={(e) => handleMenuClick(e, "completedList")}>Completed</p>
-                        <p css={mode === 3? s.box2_sub1 : s.box2_sub2} onClick={(e) => handleMenuClick(e, "uncompletedList")}>Pending</p>
-                        <p css={s.box2_sub4}>
+                        <div css={s.box2_sub}>
+                            <p css={mode === 1? s.box2_sub1 : ""} onClick={(e) => handleMenuClick(e, "allList")}>All</p>
+                            <p css={mode === 2? s.box2_sub1 : ""} onClick={(e) => handleMenuClick(e, "completedList")}>Completed</p>
+                            <p css={mode === 3? s.box2_sub1 : ""} onClick={(e) => handleMenuClick(e, "uncompletedList")}>Pending</p>
+                        </div>
+                        <p css={s.box2_sub_1}>
                             <button onClick={handleRegisterButtonClick} css={s.box2_sub4_button}>Add</button>
                         </p>
                     </div>
@@ -283,50 +285,52 @@ function MainPage() {
                                     onClick={handleSearchClick}>Search</button>
                             </div>
                         </div>
-                        <table css={s.box3_sub2}>
-                            <thead css={s.tableHeader}>
-                                <tr css={s.tableTr}>
-                                    <th>Status</th>
-                                    <th>ID</th>
-                                    <th>Updata Date</th>
-                                    <th>Todo</th>
-                                    <th>Management</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {
-                                    todoList.map((todo) =>
-                                        <tr key={todo.todoId} css={todo.status === 1 ? s.completedSelectedItem : s.pendingSelectedItem}>
-                                            <td>
-                                                <label htmlFor="chk">{todo.status === 1 ? <MdRadioButtonChecked /> : <MdRadioButtonUnchecked />}</label>
-                                                <input 
-                                                type="checkbox"
-                                                name="check"
-                                                checked={todo.status === 1? "checked" : ""} 
-                                                onChange={(e) => handleCheckedChange(e, todo.todoId, todo.todoName)}
-                                                value={todo.status}
-                                                id='chk'
-                                                />
-                                                
-                                            </td>
-                                            <td>{todo.todoId}</td> 
-                                            <td>{todo.updateDate}</td>
-                                            <td>{todo.todoName}</td>
-                                            <td css={s.managementButton}>
-                                                <p>
-                                                    <label htmlFor="" onClick={() => handleModifyModalOpen(todo.todoId, todo.todoName, todo.status)}><PiNotePencilDuotone size="25" /></label>
-                                                    <button>Update</button>
-                                                </p>
-                                                <p>
-                                                    <label htmlFor="" onClick={() => handleDeleteClick(todo.todoId)}><MdDeleteOutline size="25"/></label>
-                                                    <button>Delete</button>
-                                                </p>
-                                            </td>
+                        <div css={s.tableCotainer}>
+                            <table css={s.box3_sub2}>
+                                <div css={s.tableHeader}>
+                                        <tr css={s.tableTr}>
+                                            <th>Status</th>
+                                            <th>ID</th>
+                                            <th>Updata Date</th>
+                                            <th>Todo</th>
+                                            <th>Management</th>
                                         </tr>
-                                    )
-                            }
-                            </tbody>
-                        </table>
+                                    </div>
+                                <div css={s.tableBody}>
+                                    {
+                                            todoList.map((todo) =>
+                                                <tr key={todo.todoId} css={todo.status === 1? s.selectedItem : s.tableItem}>
+                                                    <td>
+                                                        <label htmlFor="chk">{todo.status === 1 ? <MdRadioButtonChecked /> : <MdRadioButtonUnchecked />}</label>
+                                                        <input 
+                                                        type="checkbox"
+                                                        name="check"
+                                                        checked={todo.status === 1? "checked" : ""} 
+                                                        onChange={(e) => handleCheckedChange(e, todo.todoId, todo.todoName)}
+                                                        value={todo.status}
+                                                        id='chk'
+                                                        />
+                                                        
+                                                    </td>
+                                                    <td>{todo.todoId}</td> 
+                                                    <td>{todo.updateDate}</td>
+                                                    <td>{todo.todoName}</td>
+                                                    <td css={s.managementButton}>
+                                                        <p>
+                                                            <label htmlFor="" onClick={() => handleModifyModalOpen(todo.todoId, todo.todoName, todo.status)}><PiNotePencilDuotone size="25" /></label>
+                                                            <button>Update</button>
+                                                        </p>
+                                                        <p>
+                                                            <label htmlFor="" onClick={() => handleDeleteClick(todo.todoId)}><MdDeleteOutline size="25"/></label>
+                                                            <button>Delete</button>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            )
+                                    }
+                                </div>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

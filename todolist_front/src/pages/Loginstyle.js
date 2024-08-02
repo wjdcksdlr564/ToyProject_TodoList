@@ -4,21 +4,19 @@ import { css } from "@emotion/react";
 export const container = css`
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
     box-sizing: border-box;
-    //border: 1px solid #dbdbdb;
     border-radius: 30px;
     padding: 10px 10px;
-    justify-content: center;
-    align-items: center;
-    margin: 0px auto;
     width: 500px;
     height: 500px;
     background-color: #fafafa;
-    //background-color: white;
 `
 
 export const header = css`
-    size: 20px;
+    margin-top: 50px;
+    font-size: 20px;
     color: #1b1b1b;
     h1 {
         font-size: 40px;
@@ -29,7 +27,10 @@ export const header = css`
 export const mainCotainer = css`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
+
+    height: 230px;
+    margin-bottom: 50px;
 `;
 
 export const inputcontainer = css`
@@ -55,7 +56,7 @@ export const inputCheck = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: red
+    color: red;
 `;
 
 

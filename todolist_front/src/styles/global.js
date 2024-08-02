@@ -44,7 +44,13 @@ export const global = css`
         border-collapse: collapse;
     }
 
+    p {
+        margin: 0;
+        padding: 0;
+    }
+
     button {
+        margin: 0;
         box-sizing: border-box;
         border: 1px solid #dbdbdb;
         padding: 5px 10px;
