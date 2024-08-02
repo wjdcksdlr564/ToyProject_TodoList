@@ -5,10 +5,10 @@ import * as s from "./style";
 import axios from 'axios';
 import api from '../../apis/instance';
 
-const ModifyModal = ({ modifyModalOpen, closeModal, setMode }) => {
+const ModifyModal = ({ modifyModalOpen, closeModal, setRefresh }) => {
 
     const [ modifyTodo, setModifyTodo ] = useState({
-        todoName: ""
+        todoName: modifyModalOpen.todoName
     });
 
     // 수정
@@ -22,8 +22,8 @@ const ModifyModal = ({ modifyModalOpen, closeModal, setMode }) => {
             const response = await api.put(`http://localhost:8080/api/v1/todo/${parseInt(modifyModalOpen.todoId)}`, updataData);
             alert("Successfully Updated!");
             // console.log(response.data);
+            setRefresh(2);
             setModifyTodo({todoName: ""});
-            setMode(1);
             closeModal();
 
         } catch(error) {

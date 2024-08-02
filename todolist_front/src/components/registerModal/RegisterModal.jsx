@@ -6,9 +6,7 @@ import ReactModal from 'react-modal';
 import * as s from "./style";
 import api from '../../apis/instance';
 
-const RegisterModal = ({ registerModalOpen, closeModal, setMode }) => {
-
-    const [ openState, setOpenState ] = useState(false);
+const RegisterModal = ({ registerModalOpen, closeModal, setRefresh }) => {
 
     const [ registerTodo, setRegisterTodo ] = useState({
         todoName: ""
@@ -26,7 +24,7 @@ const RegisterModal = ({ registerModalOpen, closeModal, setMode }) => {
             alert("Successfully Registered!");
             // console.log(response.data);
             setRegisterTodo({todoName: ""});
-            setMode(1);
+            setRefresh(1);
             closeModal(data => {
                 return {
                 ...data,

@@ -47,7 +47,8 @@ function MainPage() {
 
     const [ allTodoList, setAllTodoList ] = useState([]);
     const [ todoList, setTodoList ] = useState([]);
-    const [ mode, setMode ] = useState(0);
+    const [ mode, setMode ] = useState(1);
+    const [ refresh, setRefresh ] = useState(0);
 
     const [ registerModalOpen, setRegisterModalOpen ] = useState({
         userId: 0,
@@ -75,8 +76,29 @@ function MainPage() {
         if(!!searchParams?.userId) {
             defaultTodoList();
         }
-    }, [searchParams]);
+    }, [searchParams.updateDate, searchParams.userId]);
 
+    useEffect( () => {
+        if(refresh !== 0) {
+            const defaultTodoList = async () => {
+                // console.log(searchParams);
+                try {
+                    const response = await api.get("http://localhost:8080/api/v1/todos", {params: searchParams});
+                    setTodoList(response.data);
+                    setAllTodoList(response.data);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+            if(!!searchParams?.userId) {
+                defaultTodoList();
+            }
+        }
+        if(refresh === 1) {
+            setMode(1);
+        }
+        setRefresh(0);
+    }, [refresh]);
 
     useEffect(() => {
         if(mode === 1) {
@@ -193,7 +215,7 @@ function MainPage() {
         }
     }
 
-    const handleRegisterButtonClick = (todoId) => {
+    const handleRegisterButtonClick = () => {
         setRegisterModalOpen({
             userId: searchParams.userId,
             isOpen: true
@@ -223,8 +245,8 @@ function MainPage() {
 
     return (
         <>
-            <RegisterModal registerModalOpen={registerModalOpen} closeModal={closeModal} setMode={setMode} ></RegisterModal>
-            <ModifyModal modifyModalOpen={modifyModalOpen} closeModal={closeModal} setMode={setMode}></ModifyModal>
+            <RegisterModal registerModalOpen={registerModalOpen} closeModal={closeModal} setRefresh={setRefresh} ></RegisterModal>
+            <ModifyModal modifyModalOpen={modifyModalOpen} closeModal={closeModal} setRefresh={setRefresh}></ModifyModal>
             <div css={s.container}>
                 <div css={s.semi_container}>
                     <div css={s.box1} >
@@ -273,7 +295,7 @@ function MainPage() {
                             <tbody>
                             {
                                     todoList.map((todo) =>
-                                        <tr key={todo.todoId} css={s.selectedItem}>
+                                        <tr key={todo.todoId} css={todo.status === 1 ? s.completedSelectedItem : s.pendingSelectedItem}>
                                             <td>
                                                 <input 
                                                 type="checkbox"

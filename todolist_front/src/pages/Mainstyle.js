@@ -328,7 +328,14 @@ export const del = {
     icon: <MdDeleteOutline />
 }
 
-export const selectedItem = css`
+export const pendingSelectedItem = css`
+    &:hover {
+        font-weight: 800;
+    }
+`;
+
+export const completedSelectedItem = css`
+    text-decoration: line-through;
     &:hover {
         font-weight: 800;
     }
