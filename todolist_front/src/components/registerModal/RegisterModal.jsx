@@ -59,20 +59,21 @@ const RegisterModal = ({ registerModalOpen, closeModal, setMode }) => {
                     padding: '20px',
                     width: '400px',
                     height: '400px',
-                    backgroundColor: '#fafafa',
+                    backgroundColor: 'white',
+                    borderRadius: '30px'
                 }
             }}
             isOpen={registerModalOpen.isOpen}
             onRequestClose={closeModal.isOpen}
             ariaHideApp={false}>
             <div css={s.container}>
-                <h2>Register Todo</h2>
-                <div>
-                    <label htmlFor="">Register Todo: </label>
-                    <input type="text" onChange={handleInputChange} name="todoName" value={registerTodo.todoName} placeholder='input your todo'/>
+                <h2>Add Todo</h2>
+                <div css={s.container_sub1}>
+                    <label htmlFor=""></label>
+                    <input type="text" onChange={handleInputChange} name="todoName" value={registerTodo.todoName} placeholder='Add a new todo...'/>
                 </div>
-                <div>
-                    <button onClick={handleRegisterButtonClick}>Register</button>
+                <div css={s.container_sub2}>
+                    <button onClick={handleRegisterButtonClick}>Add</button>
                     <button onClick={closeModal}>Cancel</button>
                 </div>
             </div>    

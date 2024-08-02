@@ -3,6 +3,8 @@ import { BsList } from "react-icons/bs";
 import { PiNotePencilDuotone } from "react-icons/pi";
 import { MdDeleteOutline } from "react-icons/md";
 import { hover } from "@testing-library/user-event/dist/hover";
+import { MdRadioButtonChecked } from "react-icons/md";
+import { MdRadioButtonUnchecked } from "react-icons/md";
 
 export const container = css`
     display: flex;
@@ -44,6 +46,7 @@ export const box1_sub1 =  css`
     border: none;
     //border-right: 1px solid black;
     border-collapse: collapse;
+    padding-left: 10px;
     flex-grow: 1;
     display: flex;
     align-items: center;
@@ -55,6 +58,9 @@ export const box1_sub2 =  css`
     border: none;
     //border-right: 1px solid black;
     flex-grow: 10;
+    h1 {
+        font-size: 40px;
+    }
 `;
 
 export const box1_sub3 =  css`
@@ -85,7 +91,7 @@ export const box2 = css`
     height: 60px;
     margin: 0;
     padding: 0;
-    div:nth-of-type(1){
+    /*div:nth-of-type(1){
         border-width: 1px;
         border-color: black;
     }
@@ -96,20 +102,23 @@ export const box2 = css`
     div:nth-of-type(3){
         border-width: 0px;
         color: #dbdbdb;
-    }
+    }*/
 `;
 
 export const box2_sub1 = css`
     box-sizing: border-box;
     border: none;
+    border-bottom: 1px solid black;
     text-align: center;
     transform: translateY(1px);
     line-height: 26px;
-    width: 70px;
+    width: 80px;
     height: 30px;
     margin: 30px 0 0 0;
     padding: 2px;
-    font-size: 13px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor:pointer;
     &:focus {
         border: 1px solid black;
         border-bottom: none;
@@ -119,8 +128,9 @@ export const box2_sub1 = css`
 
 export const box2_sub2 = css`
     box-sizing: border-box;
-    border: 1px solid black;
-    /* border: none; */
+    // border: 1px solid black;
+    // border: none; 
+    /* border-bottom: 1px solid black; */
     text-align: center;
     transform: translateY(1px);
     line-height: 26px;
@@ -139,14 +149,11 @@ export const box2_sub2 = css`
         background-color: #dbdbdb;
         padding: auto;
     }
-    &:focus {
-        
-    }
 `;
 
 export const box2_sub3 = css`
     box-sizing: border-box;
-    border: 1px solid black;
+    //border: 1px solid black;
     text-align: center;
     transform: translateY(1px);
     line-height: 26px;
@@ -173,6 +180,8 @@ export const box2_sub4 = css`
     flex-grow: 1;
     height: 45px;
     margin: 7.5px 0;
+    padding-right: 30px;
+    padding-top: 10px;
 `;
 
 export const box2_sub4_button = css`
@@ -181,7 +190,7 @@ export const box2_sub4_button = css`
     width: 90px;
     height: 47px;
     border-radius: 30px;
-    background-color: #166caa;
+    background-color: #5da8dd;
     color: white;
     font-size: 18px;
     &:active {
@@ -196,8 +205,9 @@ export const box3 = css`
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    //border: none;
+    border: none;
     width: 100%;
+    //flex-grow: 1;
     margin: 0;
     padding: 0;
     overflow-y: auto;
@@ -205,7 +215,7 @@ export const box3 = css`
 
 export const box3_sub1 = css`
     box-sizing: border-box;
-    border: 1px solid black;
+    //border: 1px solid black;
     border-bottom: none;
     border-top: none;
     display: flex;
@@ -235,7 +245,7 @@ export const box3_sub1_span2 = css`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    border-top: 1px solid black;
+    //border-top: 1px solid black;
     flex-grow: 1;
     height: 100%;
     margin: 10px 0px 10px;
@@ -251,7 +261,8 @@ export const box3_sub1_date = css`
 
 export const box3_sub1_input = css`
     box-sizing: border-box;
-    border: 1px solid black;
+    //border: 1px solid black;
+    border: none;
     width: 250px;
     height: 30px;
     margin: 10px;   
@@ -262,7 +273,7 @@ export const box3_sub1_button = css`
     width: 60px;
     height: 30px;
     margin: 10px 0;
-    background-color: #166caa;
+    background-color: #5da8dd;
     color: white;
     border-radius: 20px;
     font-size: 11px;
@@ -279,10 +290,12 @@ export const box3_sub1_button = css`
 export const box3_sub2 = css`
     box-sizing: border-box;
     border: none;
-    border-left: 1px solid black;
-    width: 100%;
+    //border-left: 1px solid black;
+    border-top: 3px solid #166caa;
+    width: 98%;
+    height: 100%;
     flex-grow: 1;
-    background-color: #f5f7f7e5;
+    background-color: white;
     button {
         display: none;
     }
@@ -294,19 +307,24 @@ export const tableHeader = css`
 
 export const tableTr = css`
     th:nth-of-type(1){
+        border: none;
         width: 100px;
     }
     th:nth-of-type(2){
+        border: none;
         width: 100px;
     }
     th:nth-of-type(3){
+        border: none;
         width: 200px;
     }
     th:nth-of-type(4){
+        border: none;
         flex-grow: 1;
-        width: 500px;
+        width: 400px;
     }
     th:nth-of-type(5){
+        border: none;
         width: 300px;
     }
 `;
@@ -329,9 +347,16 @@ export const del = {
 }
 
 export const selectedItem = css`
+    td {
+        border: none;
+    }
     &:hover {
         font-weight: 800;
     }
+    input {
+        display: none;
+    }
+
 `;
 
 export const managementButton = css`

@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 public class Todo {
     private int userId;
     private int todoId;
-    private int userId;
     private String todoName;
     private int status;
     private LocalDateTime createDate;

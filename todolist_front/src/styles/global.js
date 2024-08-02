@@ -34,7 +34,7 @@ export const global = css`
 
     tr, td {
         border: none;
-        height: 35px;
+        height: 40px;
     }
 
     th, td {

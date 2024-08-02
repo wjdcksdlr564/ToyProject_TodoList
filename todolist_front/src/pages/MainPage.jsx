@@ -9,8 +9,9 @@ import { BsList } from 'react-icons/bs';
 import RegisterModal from '../components/registerModal/RegisterModal';
 import ModifyModal from '../components/modifyTodoModal/ModifyModal';
 import { PiNotePencilDuotone } from 'react-icons/pi';
-import { MdDeleteOutline } from 'react-icons/md';
+import { MdDeleteOutline, MdRadioButtonChecked, MdRadioButtonUnchecked } from 'react-icons/md';
 import { css } from '@emotion/react';
+import { RiCheckboxBlankCircleLine } from 'react-icons/ri';
 
 function MainPage() {
     const navigate = useNavigate();
@@ -231,7 +232,7 @@ function MainPage() {
                         <div css={s.box1_sub1}>
                             <BsList size="40"/>
                         </div>
-                        <div css={s.box1_sub2}>
+                        <div css={s.box1_sub2}> <h1>Todo List</h1>
                             <label htmlFor=""></label>
                         </div>
                         <div css={s.box1_sub3}>
@@ -242,9 +243,9 @@ function MainPage() {
                         </div>
                     </div>
                     <div css={s.box2} >
-                        <p css={mode === 1? s.box2_sub3 : s.box2_sub2} onClick={(e) => handleMenuClick(e, "allList")}>All</p>
-                        <p css={mode === 2? s.box2_sub3 : s.box2_sub2} onClick={(e) => handleMenuClick(e, "completedList")}>Completed</p>
-                        <p css={mode === 3? s.box2_sub3 : s.box2_sub2} onClick={(e) => handleMenuClick(e, "uncompletedList")}>Pending</p>
+                        <p css={mode === 1? s.box2_sub1 : s.box2_sub2} onClick={(e) => handleMenuClick(e, "allList")}>All</p>
+                        <p css={mode === 2? s.box2_sub1 : s.box2_sub2} onClick={(e) => handleMenuClick(e, "completedList")}>Completed</p>
+                        <p css={mode === 3? s.box2_sub1 : s.box2_sub2} onClick={(e) => handleMenuClick(e, "uncompletedList")}>Pending</p>
                         <p css={s.box2_sub4}>
                             <button onClick={handleRegisterButtonClick} css={s.box2_sub4_button}>Add</button>
                         </p>
@@ -275,13 +276,16 @@ function MainPage() {
                                     todoList.map((todo) =>
                                         <tr key={todo.todoId} css={s.selectedItem}>
                                             <td>
+                                                <label htmlFor="chk">{todo.status === 1 ? <MdRadioButtonChecked /> : <MdRadioButtonUnchecked />}</label>
                                                 <input 
                                                 type="checkbox"
                                                 name="check"
                                                 checked={todo.status === 1? "checked" : ""} 
                                                 onChange={(e) => handleCheckedChange(e, todo.todoId, todo.todoName)}
                                                 value={todo.status}
-                                            />
+                                                id='chk'
+                                                />
+                                                
                                             </td>
                                             <td>{todo.todoId}</td> 
                                             <td>{todo.updateDate}</td>

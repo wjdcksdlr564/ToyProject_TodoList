@@ -54,7 +54,8 @@ const ModifyModal = ({ modifyModalOpen, closeModal, setMode }) => {
                         padding: '20px',
                         width: '400px',
                         height: '400px',
-                        backgroundColor: '#fafafa',
+                        backgroundColor: 'white',
+                        borderRadius: '30px'
                     }
                 }}
                 isOpen={modifyModalOpen.isOpen}
@@ -62,12 +63,12 @@ const ModifyModal = ({ modifyModalOpen, closeModal, setMode }) => {
                 ariaHideApp={false}>
                 <div css={s.container}>
                     <h2>Update Todo: </h2>
-                    <div>
-                        <label htmlFor="">Modify Todo</label>
+                    <div css={s.container_sub1}>
+                        <label htmlFor=""></label>
                         <input type="text" onChange={handleInputChange} name="todoName" value={modifyTodo.todoName} placeholder={"before: " + modifyModalOpen.todoName}/>
                     </div>
-                    <div>
-                        <button onClick={handleModifyButtonClick}>Modify</button>
+                    <div css={s.container_sub2}>
+                        <button onClick={handleModifyButtonClick}>Update</button>
                         <button onClick={closeModal}>Cancel</button>
                     </div>
                 </div>    
