@@ -45,6 +45,22 @@ const RegisterModal = ({ registerModalOpen, closeModal, setRefresh }) => {
         })
     }
 
+    const handleRegisterInputOnKeyDown = (e) => {
+        if(e.keyCode === 13) {
+            handleRegisterButtonClick();
+        }
+
+        if (e.keyCode === 27) {
+            setRegisterTodo({todoName: ""});
+            closeModal(data => {
+                return {
+                ...data,
+                status: false
+                }    
+            });
+        }
+    }
+
     return (
         <>
         <ReactModal
@@ -68,7 +84,7 @@ const RegisterModal = ({ registerModalOpen, closeModal, setRefresh }) => {
                 <h2>Add Todo</h2>
                 <div css={s.container_sub1}>
                     <label htmlFor=""></label>
-                    <input type="text" onChange={handleInputChange} name="todoName" value={registerTodo.todoName} placeholder='Add a new todo...'/>
+                    <input type="text" onChange={handleInputChange} name="todoName" value={registerTodo.todoName} onKeyDown={handleRegisterInputOnKeyDown} placeholder='Add a new todo...'/>
                 </div>
                 <div css={s.container_sub2}>
                     <button onClick={handleRegisterButtonClick}>Add</button>

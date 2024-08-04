@@ -29,15 +29,21 @@ function LoginPage(props) {
     const handleSubmit = async () => {
 
         try {
-            console.log(user);
+            // console.log(user);
             const response = await api.post("http://localhost:8080/api/v1/login", user);
             // console.log(response.status);
             setAuthState(true);
-            alert(response.data.message)
+            alert(response.data.message);
             navigate("/");
         } catch (error) {
             // console.error(error.response.data);
             setLoginMessage(error.response.data);
+        }
+    }
+
+    const handePasswordInputKeyDown = (e) => {
+        if(e.keyCode === 13) {
+            handleSubmit();
         }
     }
     
@@ -64,6 +70,7 @@ function LoginPage(props) {
                             name="password"
                             onChange={handleInputChange}
                             value={user.value}
+                            onKeyDown={handePasswordInputKeyDown}
                             placeholder='password'
                         />
                     </p>

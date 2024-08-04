@@ -254,12 +254,15 @@ export const box3_sub2 = css`
 `;
 
 export const tableHeader = css`
+    width: 100%;
+    height: 40px;
 `;
 
 export const tableTr = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
     border-bottom: 3px solid #166caa;
     th {
         border: none
@@ -296,80 +299,59 @@ export const tableBody = css`
     ::-webkit-scrollbar {
         display: none;
     }
+
+    tr {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 40px;
+        border: none;
+
+        &:hover {
+            background-color: #a9d1ed;;
+        }
+
+        td {
+        border: none
+        }
+        td:nth-of-type(1){
+            width: 100px;
+        }
+        td:nth-of-type(2){
+            width: 100px;
+        }
+        td:nth-of-type(3){
+            width: 200px;
+        }
+        td:nth-of-type(4){
+            flex-grow: 1;
+            width: 400px;
+        }
+        td:nth-of-type(5){
+            width: 200px;
+        }
+    }
 `;
 
 export const tableItem = css`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    border: none;
-
-    td {
-        border: none
-    }
-    td:nth-of-type(1){
-        width: 100px;
-    }
-    td:nth-of-type(2){
-        width: 100px;
-    }
-    td:nth-of-type(3){
-        width: 200px;
-    }
-    td:nth-of-type(4){
-        flex-grow: 1;
-        width: 400px;
-    }
-    td:nth-of-type(5){
-        width: 200px;
-    }
-
-
     &:hover {
         font-weight: 800;
     }
-    /* input {
+    input {
         display: none;
-    } */
+    }
 `;
 
 export const selectedItem = css`
-display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    border: none;
-
-    td {
-        border: none
-    }
-    td:nth-of-type(1){
-        width: 100px;
-    }
-    td:nth-of-type(2){
-        width: 100px;
-    }
-    td:nth-of-type(3){
-        width: 200px;
-    }
-    td:nth-of-type(4){
-        flex-grow: 1;
-        width: 400px;
-    }
-    td:nth-of-type(5){
-        width: 200px;
-    }
-
-
     &:hover {
         font-weight: 800;
     }
-    /* input {
+    input {
         display: none;
-    } */
-    
+    }
     text-decoration: line-through;
+    color: #ea5454;
 `;
 
 export const managementButton = css`
@@ -382,4 +364,18 @@ export const managementButton = css`
     label{
         cursor: pointer;
     }
+`;
+
+export const icon = css`
+    size: 25px;
+
+    &:hover {
+        size: 30px;
+    }
+`;
+
+export const emptyRetulse = css`
+    position: absolute;
+    right: 50%;
+    top: 50%;
 `;

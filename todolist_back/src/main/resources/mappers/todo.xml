@@ -55,6 +55,7 @@
         where
             user_id = #{userId}
             and update_date like concat ("%", #{date}, "%")
+            and todo_name like concat ("%", #{todoName}, "%")
     </select>
     <select id="findAllTodo" resultType="com.toyproject.todolist.entity.Todo">
         select

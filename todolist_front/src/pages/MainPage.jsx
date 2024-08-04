@@ -122,16 +122,34 @@ function MainPage() {
     const handleMenuClick = (e, value) => {
         if(value === "allList") {
             // console.log("전체 선택");
+            setSearchParams(data => {
+                return {
+                    ...data,
+                    todoName: ""
+                }
+            });
             setMode(1);
         }
 
         if(value === "completedList") {
             // console.log("완료 선택");
+            setSearchParams(data => {
+                return {
+                    ...data,
+                    todoName: ""
+                }
+            });
             setMode(2);
         }
 
         if(value === "uncompletedList") {
             // console.log("미완료 선택");
+            setSearchParams(data => {
+                return {
+                    ...data,
+                    todoName: ""
+                }
+            });
             setMode(3);
         }
     }
@@ -151,7 +169,6 @@ function MainPage() {
     }
 
     // 다건 조회
-    // searchparams 바뀔 때 마다 동작하게 해놔서 검색 버튼을 누를 일이 없음
     const handleSearchClick = async () => {
         try {
             const response = await api.get("http://localhost:8080/api/v1/todos", {params: searchParams});
@@ -180,11 +197,37 @@ function MainPage() {
     }
 
     // 체크박스 수정
-    const handleCheckedChange = async (e, data1, data2) => {
-        const todoId = parseInt(data1);
-        const updateStatus = e.target.checked ? 1 : 0;
+    // const handleCheckedChange = async (e, data1, data2) => {
+    //     const todoId = parseInt(data1);
+    //     const updateStatus = e.target.checked ? 1 : 0;
+    //     try {
+    //         const response = await api.put(`http://localhost:8080/api/v1/todo/${todoId}`, { todoId: todoId, userId: searchParams.userId, todoName: data2, status : updateStatus })
+    //         // console.log(response.data);
+    //         setAllTodoList(todos => {
+    //             return [
+    //                 ...todos.map(todo => {
+    //                     if(todo.todoId === parseInt(todoId)) {
+    //                         return {
+    //                             ...todo,
+    //                             status: updateStatus
+    //                         }
+    //                     }
+    //                     return todo;
+    //                 })
+    //             ]
+    //         })
+
+    //     } catch (e) {
+    //         console.error(e);
+    //     }
+    // }
+
+    const handleCheckLabelClick = async (todoId, todoName, status) => {
+        const updateTodoId = parseInt(todoId);
+        const updateStatus = status ? 0 : 1;
+        const putData = { todoId: updateTodoId, userId: searchParams.userId, todoName: todoName, status : updateStatus }
         try {
-            const response = await api.put(`http://localhost:8080/api/v1/todo/${todoId}`, { todoId: todoId, userId: searchParams.userId, todoName: data2, status : updateStatus })
+            const response = await api.put(`http://localhost:8080/api/v1/todo/${todoId}`, putData);
             // console.log(response.data);
             setAllTodoList(todos => {
                 return [
@@ -244,6 +287,12 @@ function MainPage() {
         }));
     }
 
+    const handleSearchOnKeyDown = (e) => {
+        if(e.keyCode === 13) {
+            handleSearchClick();
+        }
+    }
+
     return (
         <>
             <RegisterModal registerModalOpen={registerModalOpen} closeModal={closeModal} setRefresh={setRefresh} ></RegisterModal>
@@ -255,13 +304,13 @@ function MainPage() {
                             <BsList size="40"/>
                         </div>
                         <div css={s.box1_sub2}> <h1>Todo List</h1>
-                            <label htmlFor=""></label>
+                            <label ></label>
                         </div>
-                        <div css={s.box1_sub3}>
-                            <label htmlFor="">Profile</label>
-                        </div>
+                        {/* <div css={s.box1_sub3}>
+                            <label >Profile</label>
+                        </div> */}
                         <div css={s.box1_sub4}>
-                            <label htmlFor="" onClick={handleLogoutClick}>Logout</label>
+                            <label onClick={handleLogoutClick}>Logout</label>
                         </div>
                     </div>
                     <div css={s.box2} >
@@ -280,14 +329,14 @@ function MainPage() {
                                 <input type='date' css={s.box3_sub1_date} name='updateDate' onChange={handleDateInputChange} value={searchParams.updateDate}/>
                             </div>
                             <div css={s.box3_sub1_span2}>
-                                <input type="text" css={s.box3_sub1_input} name='todoName' onChange={handleSearchInputChange} value={searchParams.todoName} placeholder='search todo...'/>
-                                <button css={s.box3_sub1_button}
-                                    onClick={handleSearchClick}>Search</button>
+                                <input type="text" css={s.box3_sub1_input} name='todoName' onChange={handleSearchInputChange} onKeyDown={handleSearchOnKeyDown} value={searchParams.todoName} placeholder='search todo...'/>
+                                <button css={s.box3_sub1_button} onClick={handleSearchClick}>Search</button>
                             </div>
                         </div>
                         <div css={s.tableCotainer}>
                             <table css={s.box3_sub2}>
-                                <div css={s.tableHeader}>
+                                <thead>
+                                    <div css={s.tableHeader}>
                                         <tr css={s.tableTr}>
                                             <th>Status</th>
                                             <th>ID</th>
@@ -296,19 +345,24 @@ function MainPage() {
                                             <th>Management</th>
                                         </tr>
                                     </div>
-                                <div css={s.tableBody}>
-                                    {
+                                </thead>
+                                <tbody>
+                                    <div css={s.tableBody}>
+                                        { !!todoList ?
                                             todoList.map((todo) =>
-                                                <tr key={todo.todoId} css={todo.status === 1? s.selectedItem : s.tableItem}>
+                                                <tr key={todo.todoId} css={todo.status === 1? s.selectedItem : s.tableItem}  onClick={() => handleCheckLabelClick(todo.todoId, todo.todoName, todo.status)}>
                                                     <td>
-                                                        <label htmlFor="chk">{todo.status === 1 ? <MdRadioButtonChecked /> : <MdRadioButtonUnchecked />}</label>
+                                                        <label htmlFor="chk">
+                                                            {todo.status === 1 ? <MdRadioButtonChecked /> : <MdRadioButtonUnchecked />}
+                                                        </label>
                                                         <input 
                                                         type="checkbox"
                                                         name="check"
-                                                        checked={todo.status === 1? "checked" : ""} 
-                                                        onChange={(e) => handleCheckedChange(e, todo.todoId, todo.todoName)}
+                                                        checked={todo.status === 1? true : false} 
+                                                        // onChange={(e) => handleCheckedChange(e, todo.todoId, todo.todoName)}
                                                         value={todo.status}
-                                                        id='chk'
+                                                        id="chk"
+                                                        readOnly
                                                         />
                                                         
                                                     </td>
@@ -317,18 +371,19 @@ function MainPage() {
                                                     <td>{todo.todoName}</td>
                                                     <td css={s.managementButton}>
                                                         <p>
-                                                            <label htmlFor="" onClick={() => handleModifyModalOpen(todo.todoId, todo.todoName, todo.status)}><PiNotePencilDuotone size="25" /></label>
+                                                            <label onClick={() => handleModifyModalOpen(todo.todoId, todo.todoName, todo.status)}><PiNotePencilDuotone size="25" /></label>
                                                             <button>Update</button>
                                                         </p>
                                                         <p>
-                                                            <label htmlFor="" onClick={() => handleDeleteClick(todo.todoId)}><MdDeleteOutline size="25"/></label>
+                                                            <label onClick={() => handleDeleteClick(todo.todoId)}><MdDeleteOutline size="25" /></label>
                                                             <button>Delete</button>
                                                         </p>
                                                     </td>
                                                 </tr>
-                                            )
-                                    }
-                                </div>
+                                            ) : <span css={s.emptyRetulse}>"조회 결과가 없습니다."</span>
+                                        }
+                                    </div>
+                                </tbody>  
                             </table>
                         </div>
                     </div>

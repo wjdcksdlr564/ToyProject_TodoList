@@ -24,7 +24,7 @@ function useAuth() {
     }
 
     useEffect(() => {
-        checkAuthentication();
+            checkAuthentication();
     }, [authState]);
 }
 

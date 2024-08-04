@@ -42,6 +42,22 @@ const ModifyModal = ({ modifyModalOpen, closeModal, setRefresh }) => {
         })
     }
 
+    const handleModifyInputOnKeyDown = (e) => {
+        if(e.keyCode === 13) {
+            handleModifyButtonClick();
+        }
+
+        if (e.keyCode === 27) {
+            setModifyTodo({todoName: ""});
+            closeModal(data => {
+                return {
+                ...data,
+                status: false
+                }    
+            });
+        }
+    }
+
     return (
         <>
             <ReactModal
@@ -65,7 +81,7 @@ const ModifyModal = ({ modifyModalOpen, closeModal, setRefresh }) => {
                     <h2>Update Todo </h2>
                     <div css={s.container_sub1}>
                         <label htmlFor=""></label>
-                        <input type="text" onChange={handleInputChange} name="todoName" value={modifyTodo.todoName} placeholder={"before: " + modifyModalOpen.todoName}/>
+                        <input type="text" onChange={handleInputChange} name="todoName" onKeyDown={handleModifyInputOnKeyDown} value={modifyTodo.todoName} placeholder={"before: " + modifyModalOpen.todoName}/>
                     </div>
                     <div css={s.container_sub2}>
                         <button onClick={handleModifyButtonClick}>Update</button>

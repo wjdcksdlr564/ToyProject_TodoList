@@ -22,6 +22,10 @@ export const global = css`
         background-color: #5da8dd;
     }
 
+    h1, h2, h3, h4 {
+        user-select: none;
+    }
+
     label {
         justify-content: center;
         align-items: center;
@@ -34,7 +38,6 @@ export const global = css`
 
     tr, td {
         border: none;
-        height: 40px;
     }
 
     th, td {
