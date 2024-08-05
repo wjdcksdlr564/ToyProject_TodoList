@@ -186,7 +186,7 @@ function MainPage() {
                 const response = await api.delete(`http://localhost:8080/api/v1/todo/${parseInt(todoId)}`);
                 // console.log(response.data);
                 if(response.data.success) {
-                    setTodoList(todoList => [ ...todoList.filter((todo) => todo.todoId !== parseInt(todoId))])
+                    setAllTodoList(todoList => [ ...todoList.filter((todo) => todo.todoId !== parseInt(todoId))])
                 }
             } catch (e) {
                 console.error(e);
@@ -350,9 +350,9 @@ function MainPage() {
                                     <div css={s.tableBody}>
                                         { !!todoList ?
                                             todoList.map((todo) =>
-                                                <tr key={todo.todoId} css={todo.status === 1? s.selectedItem : s.tableItem}  onClick={() => handleCheckLabelClick(todo.todoId, todo.todoName, todo.status)}>
+                                                <tr key={todo.todoId} css={todo.status === 1? s.selectedItem : s.tableItem} >
                                                     <td>
-                                                        <label htmlFor="chk">
+                                                        <label htmlFor="chk" onClick={() => handleCheckLabelClick(todo.todoId, todo.todoName, todo.status)}>
                                                             {todo.status === 1 ? <MdRadioButtonChecked /> : <MdRadioButtonUnchecked />}
                                                         </label>
                                                         <input 
