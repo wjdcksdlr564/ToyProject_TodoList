@@ -350,9 +350,9 @@ function MainPage() {
                                     <div css={s.tableBody}>
                                         { !!todoList.length ?
                                             todoList.map((todo) =>
-                                                <tr key={todo.todoId} css={todo.status === 1? s.selectedItem : s.tableItem} >
+                                                <tr key={todo.todoId} css={todo.status === 1? s.selectedItem : s.tableItem} onClick={() => handleCheckLabelClick(todo.todoId, todo.todoName, todo.status)}>
                                                     <td>
-                                                        <label htmlFor="chk" onClick={() => handleCheckLabelClick(todo.todoId, todo.todoName, todo.status)}>
+                                                        <label htmlFor={todo.todoId} >
                                                             {todo.status === 1 ? <MdRadioButtonChecked /> : <MdRadioButtonUnchecked />}
                                                         </label>
                                                         <input 
@@ -361,7 +361,7 @@ function MainPage() {
                                                         checked={todo.status === 1? true : false} 
                                                         // onChange={(e) => handleCheckedChange(e, todo.todoId, todo.todoName)}
                                                         value={todo.status}
-                                                        id="chk"
+                                                        id={todo.todoId}
                                                         readOnly
                                                         />
                                                         
