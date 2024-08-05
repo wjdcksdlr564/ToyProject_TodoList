@@ -30,7 +30,7 @@ function LoginPage(props) {
 
         try {
             // console.log(user);
-            const response = await api.post("http://localhost:8080/api/v1/login", user);
+            const response = await api.post("login", user);
             // console.log(response.status);
             setAuthState(true);
             alert(response.data.message);

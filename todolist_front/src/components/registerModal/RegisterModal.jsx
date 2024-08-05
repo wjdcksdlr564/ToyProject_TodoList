@@ -20,7 +20,7 @@ const RegisterModal = ({ registerModalOpen, closeModal, setRefresh }) => {
             return;
         }
         try {
-            const response = await api.post(`http://localhost:8080/api/v1/todo`, registerData);
+            const response = await api.post(`v1/todo`, registerData);
             alert("Successfully Registered!");
             // console.log(response.data);
             setRegisterTodo({todoName: ""});

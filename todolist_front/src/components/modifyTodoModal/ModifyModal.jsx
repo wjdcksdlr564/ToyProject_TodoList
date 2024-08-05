@@ -19,7 +19,7 @@ const ModifyModal = ({ modifyModalOpen, closeModal, setRefresh }) => {
             return;
         }
         try {
-            const response = await api.put(`http://localhost:8080/api/v1/todo/${parseInt(modifyModalOpen.todoId)}`, updataData);
+            const response = await api.put(`todo/${parseInt(modifyModalOpen.todoId)}`, updataData);
             alert("Successfully Updated!");
             // console.log(response.data);
             setRefresh(2);
