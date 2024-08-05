@@ -30,7 +30,7 @@ function LoginPage(props) {
 
         try {
             // console.log(user);
-            const response = await api.post("login", user);
+            const response = await api.post("/login", user);
             // console.log(response.status);
             setAuthState(true);
             alert(response.data.message);

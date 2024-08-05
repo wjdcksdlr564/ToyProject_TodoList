@@ -67,7 +67,7 @@ function MainPage() {
         const defaultTodoList = async () => {
             // console.log(searchParams);
             try {
-                const response = await api.get("todos", {params: searchParams});
+                const response = await api.get("/todos", {params: searchParams});
                 setTodoList(response.data);
                 setAllTodoList(response.data);
             } catch (error) {
@@ -84,7 +84,7 @@ function MainPage() {
             const defaultTodoList = async () => {
                 // console.log(searchParams);
                 try {
-                    const response = await api.get("todos", {params: searchParams});
+                    const response = await api.get("/todos", {params: searchParams});
                     setTodoList(response.data);
                     setAllTodoList(response.data);
                 } catch (error) {
@@ -171,7 +171,7 @@ function MainPage() {
     // 다건 조회
     const handleSearchClick = async () => {
         try {
-            const response = await api.get("v1/todos", {params: searchParams});
+            const response = await api.get("/todos", {params: searchParams});
             // console.log(response.data);
             setTodoList(response.data);
         } catch(e) {
@@ -183,7 +183,7 @@ function MainPage() {
     const handleDeleteClick = async (todoId) => {
         if(window.confirm("정말 삭제하시겠습니까?")){
             try{
-                const response = await api.delete(`todo/${parseInt(todoId)}`);
+                const response = await api.delete(`/todo/${parseInt(todoId)}`);
                 // console.log(response.data);
                 if(response.data.success) {
                     setAllTodoList(todoList => [ ...todoList.filter((todo) => todo.todoId !== parseInt(todoId))])
@@ -201,7 +201,7 @@ function MainPage() {
     //     const todoId = parseInt(data1);
     //     const updateStatus = e.target.checked ? 1 : 0;
     //     try {
-    //         const response = await api.put(`todo/${todoId}`, { todoId: todoId, userId: searchParams.userId, todoName: data2, status : updateStatus })
+    //         const response = await api.put(`/todo/${todoId}`, { todoId: todoId, userId: searchParams.userId, todoName: data2, status : updateStatus })
     //         // console.log(response.data);
     //         setAllTodoList(todos => {
     //             return [
@@ -227,7 +227,7 @@ function MainPage() {
         const updateStatus = status ? 0 : 1;
         const putData = { todoId: updateTodoId, userId: searchParams.userId, todoName: todoName, status : updateStatus }
         try {
-            const response = await api.put(`todo/${todoId}`, putData);
+            const response = await api.put(`/todo/${todoId}`, putData);
             // console.log(response.data);
             setAllTodoList(todos => {
                 return [
@@ -250,7 +250,7 @@ function MainPage() {
 
     const handleLogoutClick = async () => {
         try{
-            const response = await api.post(`logout`);
+            const response = await api.post(`/logout`);
             console.log(response.data);
             alert("로그아웃 되셨습니다.");
             navigate('/login');
