@@ -348,7 +348,7 @@ function MainPage() {
                                 </thead>
                                 <tbody>
                                     <div css={s.tableBody}>
-                                        { !!todoList ?
+                                        { !!todoList.length ?
                                             todoList.map((todo) =>
                                                 <tr key={todo.todoId} css={todo.status === 1? s.selectedItem : s.tableItem} >
                                                     <td>
@@ -383,7 +383,7 @@ function MainPage() {
                                             ) : <span css={s.emptyRetulse}>"조회 결과가 없습니다."</span>
                                         }
                                     </div>
-                                </tbody>  
+                                </tbody>
                             </table>
                         </div>
                     </div>

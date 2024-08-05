@@ -292,6 +292,7 @@ export const completedSelectedItem = css`
 `;
 
 export const tableBody = css`
+    position: relative;
     margin-top: 10px;
     width: 100%;
     height: 700px;
@@ -376,6 +377,6 @@ export const icon = css`
 
 export const emptyRetulse = css`
     position: absolute;
-    right: 50%;
+    right: 43%;
     top: 50%;
 `;
