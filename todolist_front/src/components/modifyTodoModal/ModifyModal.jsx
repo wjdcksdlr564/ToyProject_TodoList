@@ -13,14 +13,15 @@ const ModifyModal = ({ modifyModalOpen, closeModal, setRefresh }) => {
 
     // 수정
     const handleModifyButtonClick = async (e) => {
-        const updataData = {todoId: modifyModalOpen.todoId, userId: modifyModalOpen.userId, todoName: modifyTodo.todoName, status: modifyModalOpen.status};
+        const modifyTodoTodoName = modifyTodo.todoName.trim("");
+        const updataData = {todoId: modifyModalOpen.todoId, userId: modifyModalOpen.userId, todoName: modifyTodoTodoName, status: modifyModalOpen.status};
         if(!updataData.todoName) {
             alert("Todo Name can not be null");
             return;
         }
         try {
             const response = await api.put(`/todo/${parseInt(modifyModalOpen.todoId)}`, updataData);
-            alert("Successfully Updated!");
+            alert(response.data.message + " Updated!");
             // console.log(response.data);
             setRefresh(2);
             setModifyTodo({todoName: ""});
@@ -81,7 +82,7 @@ const ModifyModal = ({ modifyModalOpen, closeModal, setRefresh }) => {
                     <h2>Update Todo </h2>
                     <div css={s.container_sub1}>
                         <label htmlFor=""></label>
-                        <input type="text" onChange={handleInputChange} name="todoName" onKeyDown={handleModifyInputOnKeyDown} value={modifyTodo.todoName} placeholder={"before: " + modifyModalOpen.todoName}/>
+                        <input type="text" onChange={handleInputChange} name="todoName" onKeyDown={handleModifyInputOnKeyDown} value={modifyTodo.todoName} placeholder={"before: " + modifyModalOpen.todoName} autoFocus/>
                     </div>
                     <div css={s.container_sub2}>
                         <button onClick={handleModifyButtonClick}>Update</button>

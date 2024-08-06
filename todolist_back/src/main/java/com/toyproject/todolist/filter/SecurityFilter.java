@@ -1,22 +1,25 @@
 package com.toyproject.todolist.filter;
-import com.toyproject.todolist.dto.CommonRespDto;
 import com.toyproject.todolist.entity.User;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Iterator;
 
 @Log4j2
 public class SecurityFilter extends HttpFilter implements Filter {
 
+
+    /**************************************
+     * Title : Security Filter            *
+     * Writer : 권오광                     *
+     * CreateDate : 2024-07-31            *
+     * Content : HttpRes,resq 기반 세션 확인 *
+     *************************************/
     @ResponseBody
     public void doFilter (ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;

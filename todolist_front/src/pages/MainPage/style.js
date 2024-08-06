@@ -31,59 +31,57 @@ export const semi_container = css`
 
 export const box1 = css`
     display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
     box-sizing: border-box;
     //border: 1px solid black;
     border: none;
     border-collapse: collapse;
     width: 100%;
     height: 80px;
-    margin: 1px;
+    margin-top: 20px;
 `;
 
 export const box1_sub1 =  css`
-    text-align: center;
-    line-height: 78px;
     border: none;
     //border-right: 1px solid black;
     border-collapse: collapse;
-    padding-left: 10px;
-    flex-grow: 1;
     display: flex;
     align-items: center;
+    text-align: center;
+    line-height: 78px;
+    width: 200px;
 `;
 
 export const box1_sub2 =  css`
-    margin-left: 150px;
-    text-align: center;
     line-height: 78px;
     border: none;
     //border-right: 1px solid black;
-    flex-grow: 10;
+    flex-grow: 1;
     h1 {
+        
+        text-align: center;
         font-size: 40px;
     }
 `;
 
 export const box1_sub3 =  css`
-    text-align: center;
-    line-height: 78px;
-    border: none;
-    //border-right: 1px solid black;
-    flex-grow: 1;
-`;
-
-export const box1_sub4 =  css`   
-    flex-grow: 1;
-    text-align: center;
-    line-height: 78px;
-
-    label:hover {
-        font-weight: 800;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 200px;
+    label {
+        
+       
+        &:hover {
+            font-weight: 800;
         cursor: pointer;
+        }
     }
 `;
 
 export const box2 = css`
+
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -91,6 +89,8 @@ export const box2 = css`
     box-sizing: border-box;
     border: none;
     padding: 10px;
+    padding-top: 30px;
+    padding-bottom: 20px;
     width: 100%;
     height: 50px;
 `;
@@ -295,7 +295,7 @@ export const tableBody = css`
     position: relative;
     margin-top: 10px;
     width: 100%;
-    height: 700px;
+    height: 680px;
     overflow-y: auto;
     ::-webkit-scrollbar {
         display: none;

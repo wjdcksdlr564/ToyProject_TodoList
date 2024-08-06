@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 /** @jsxImportSource @emotion/react */
-import * as s from "./Loginstyle"
-import api from '../apis/instance';
+import * as s from "./style"
+import api from '../../apis/instance';
 import { useRecoilState } from 'recoil';
-import { authStateAtom } from '../atoms/AuthAtom';
+import { authStateAtom } from '../../atoms/AuthAtom';
 import { useNavigate } from 'react-router-dom';
 
 function LoginPage(props) {
@@ -46,6 +46,10 @@ function LoginPage(props) {
             handleSubmit();
         }
     }
+
+    const handleSignupClick = () => {
+        alert("비회원제 운영입니다.");
+    }
     
     return (
         <>
@@ -61,6 +65,7 @@ function LoginPage(props) {
                             onChange={handleInputChange}
                             value={user.value}
                             placeholder='username'
+                            autoFocus
                         />
                     </p>
                 </div>
@@ -80,7 +85,7 @@ function LoginPage(props) {
                     <button css={s.submitButton} onClick={handleSubmit}>Login</button>
                 </p>
                 <p>
-                    <button css={s.submitButton} >Signup</button>
+                    <button css={s.submitButton} onClick={handleSignupClick} >Signup</button>
                 </p>
             </main>
         </div>

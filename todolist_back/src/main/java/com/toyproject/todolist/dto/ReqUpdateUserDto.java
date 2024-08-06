@@ -3,7 +3,8 @@ package com.toyproject.todolist.dto;
 import lombok.Data;
 
 @Data
-public class ReqGetTodoDto {
-    private int todoId;
+public class ReqUpdateUserDto {
     private int userId;
+    private String password;
+    private String email;
 }

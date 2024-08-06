@@ -20,28 +20,31 @@ public class TodoServiceImpl implements TodoService {
     private TodoMapper todoMapper;
 
 
+    // Todo 등록
     @Override
-    public CommonRespDto registerTodo(ReqRegisterTodoDto reqDto) {
-        return CommonRespDto.ofDefault(todoMapper.save(reqDto.toEntity()));
+    public CommonRespTodoDto registerTodo(ReqRegisterTodoDto reqDto) {
+        return CommonRespTodoDto.ofDefault(todoMapper.save(reqDto.toEntity()));
     }
 
+    // Todo 삭제
     @Override
-    public CommonRespDto deleteTodo(int todoId) {
-        return CommonRespDto.ofDefault(todoMapper.delete(todoId));
+    public CommonRespTodoDto deleteTodo(int todoId) {
+        return CommonRespTodoDto.ofDefault(todoMapper.delete(todoId));
     }
 
+    // Todo 수정
     @Override
-    public CommonRespDto modifyTodo(ReqUpdateTodoDto reqDto) {
+    public CommonRespTodoDto modifyTodo(ReqUpdateTodoDto reqDto) {
         Todo todo = Todo.builder()
                     .todoId(reqDto.getTodoId())
                     .userId(reqDto.getUserId())
                     .todoName(reqDto.getTodoName())
                     .status(reqDto.getStatus())
                     .build();
-        return CommonRespDto.ofDefault(todoMapper.updateTodoName(todo));
+        return CommonRespTodoDto.ofDefault(todoMapper.updateTodoName(todo));
     }
 
-    // 단건 조회
+    // Todo 단건 조회
     @Override
     public RespTodoDto getTodo(ReqGetTodoDto reqDto) {
         Todo todo = todoMapper.findTodoById(reqDto.getTodoId(), reqDto.getUserId());
@@ -55,9 +58,9 @@ public class TodoServiceImpl implements TodoService {
     }
 
 
-    // 다건조회
+    // Todo 다건 조회
     @Override
-    public List<RespTodoListDto> getListApi(ReqGetTodoListDto reqDto) {
+    public List<RespTodoListDto> getTodoList(ReqGetTodoListDto reqDto) {
 //    public List<RespTodoListDto> getListApi(int userId, String todoName, String updateDate) {
 
 //        ReqGetTodoListDto reqDto = ReqGetTodoListDto.builder()
@@ -86,30 +89,9 @@ public class TodoServiceImpl implements TodoService {
         return respDtos;
     }
 
-
-    // 다건 조회
-    /*@Override
-    public List<RespTodoListDto> getListApi(@PathVariable int userId, @PathVariable String todoName, @PathVariable String updateDate) {
-        List<RespTodoListDto> respDtos = new ArrayList<>();
-
-        // db 에서 가져온 값
-        List<Todo> todos = todoMapper.findTodoListByTodoNameAndDate(userId, todoName, updateDate);
-        for(Todo to : todos) {
-            RespTodoListDto dto = RespTodoListDto.builder()
-                    .todoId(to.getTodoId())
-                    .todoName(to.getTodoName())
-                    .status(to.getStatus())
-                    .updateDate(to.getUpdateDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                    .build();
-
-            respDtos.add(dto);
-        }
-
-        return respDtos;
-    }*/
-
+    // Todo 전체 조회
     @Override
-    public List<RespGetAllTodoDto> getAllTodo() {
+    public List<RespGetAllTodoDto> getAllTodoList() {
         List<RespGetAllTodoDto> respAllDto = new ArrayList<>();
 
         // db에서 꺼내온 값을

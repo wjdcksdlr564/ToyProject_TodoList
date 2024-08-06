@@ -8,6 +8,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FilterConfig {
 
+    /**************************************
+     * Title : Security Config            *
+     * Writer : 권오광                     *
+     * CreateDate : 2024-07-31            *
+     * Content : Filter bean 추가          *
+     *************************************/
     @Bean
     public FilterRegistrationBean<SecurityFilter> SecurityFilter() {
         FilterRegistrationBean<SecurityFilter> registrationBean = new FilterRegistrationBean<>();

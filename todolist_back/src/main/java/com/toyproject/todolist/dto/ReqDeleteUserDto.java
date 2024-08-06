@@ -3,7 +3,7 @@ package com.toyproject.todolist.dto;
 import lombok.Data;
 
 @Data
-public class ReqGetTodoDto {
-    private int todoId;
+public class ReqDeleteUserDto {
     private int userId;
+    private String password;
 }

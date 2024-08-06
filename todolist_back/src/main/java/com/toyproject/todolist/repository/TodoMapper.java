@@ -11,7 +11,7 @@ public interface TodoMapper {
     int save(Todo todo);
     int delete(int todoId);
     int updateTodoName(Todo todo);
-    Todo findTodoById(@Param("todoId") int todoId, @Param("userId") int uerId);
-    List<Todo> findTodoListByTodoNameAndDate(@Param("userId") int userId, @Param("todoName") String todoName, @Param("date") String date);
+    Todo findTodoById(int todoId, int uerId);
+    List<Todo> findTodoListByTodoNameAndDate(int userId, String todoName, String date);
     List<Todo> findAllTodo();
 }

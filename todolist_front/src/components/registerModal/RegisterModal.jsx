@@ -14,14 +14,15 @@ const RegisterModal = ({ registerModalOpen, closeModal, setRefresh }) => {
 
     //등록
     const handleRegisterButtonClick = async (e) => {
-        const registerData = {todoName: registerTodo.todoName, userId: registerModalOpen.userId};
+        const registerTodoName = registerTodo.todoName.trim("");
+        const registerData = {todoName: registerTodo.registerTodoName, userId: registerModalOpen.userId};
         if(!registerData.todoName) {
             alert("Todo Name can not be null");
             return;
         }
         try {
             const response = await api.post(`/todo`, registerData);
-            alert("Successfully Registered!");
+            alert(response.data.message + " Registered!");
             // console.log(response.data);
             setRegisterTodo({todoName: ""});
             setRefresh(1);
@@ -84,7 +85,7 @@ const RegisterModal = ({ registerModalOpen, closeModal, setRefresh }) => {
                 <h2>Add Todo</h2>
                 <div css={s.container_sub1}>
                     <label htmlFor=""></label>
-                    <input type="text" onChange={handleInputChange} name="todoName" value={registerTodo.todoName} onKeyDown={handleRegisterInputOnKeyDown} placeholder='Add a new todo...'/>
+                    <input type="text" onChange={handleInputChange} name="todoName" value={registerTodo.todoName} onKeyDown={handleRegisterInputOnKeyDown} placeholder='Add a new todo...' autoFocus/>
                 </div>
                 <div css={s.container_sub2}>
                     <button onClick={handleRegisterButtonClick}>Add</button>

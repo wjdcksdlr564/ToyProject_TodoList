@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 /** @jsxImportSource @emotion/react */
-import * as s from "./SignUpStyle";
+import * as s from "./style";
 import { Navigate, useNavigate } from 'react-router-dom';
 
 const SignUpPage = () => {

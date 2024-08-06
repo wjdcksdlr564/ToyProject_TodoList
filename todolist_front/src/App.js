@@ -1,14 +1,14 @@
 import { Global } from "@emotion/react";
 import { global } from "./styles/global";
-import MainPage from "./pages/MainPage";
-import LoginPage from "./pages/LoginPage";
+import MainPage from "./pages/MainPage/MainPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import useAuth from "./hooks/useAuth";
 import { useRecoilState } from "recoil";
 import { authUserStateAtom } from "./atoms/AuthAtom";
 import { useEffect } from "react";
-import ProfilePage from "./pages/ProfilePage";
-import SignUpPage from "./pages/SignUpPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import SignUpPage from "./pages/SignupPage/SignUpPage";
 
 function App() {
   const navigate = useNavigate();

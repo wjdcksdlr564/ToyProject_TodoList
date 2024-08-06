@@ -4,9 +4,10 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toyproject.todolist.repository.TodoMapper">
     <insert id="save" parameterType="com.toyproject.todolist.entity.Todo">
-        insert into todo_tb
+        insert into
+            todo_tb
         values
-        (0, 1, #{todoName}, 0, NOW(), NOW());
+            (0, #{userId}, #{todoName}, 0, NOW(), NOW());
     </insert>
 
     <update id="updateTodoName" parameterType="com.toyproject.todolist.entity.Todo">

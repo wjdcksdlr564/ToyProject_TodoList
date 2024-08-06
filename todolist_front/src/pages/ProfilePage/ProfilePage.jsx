@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 /** @jsxImportSource @emotion/react */
-import * as s from "./ProfileStyle";
+import * as s from "./style";
 import { css } from '@emotion/react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { authStateAtom, authUserStateAtom } from '../atoms/AuthAtom';
+import { authStateAtom, authUserStateAtom } from '../../atoms/AuthAtom';
 
 function ProfilePage(props) {
     const [ authUserState, setAuthUserState ] = useRecoilState(authUserStateAtom);
@@ -21,11 +21,11 @@ function ProfilePage(props) {
     };
 
     const handleSave = () => {
-        console.log("저장 버튼 클릭됨", user);
+        // console.log("저장 버튼 클릭됨", user);
     }
 
     const handleCancel = () => {
-        console.log("취소 버튼 클릭됨");
+        // console.log("취소 버튼 클릭됨");
         window.history.back(-1);
     }
 

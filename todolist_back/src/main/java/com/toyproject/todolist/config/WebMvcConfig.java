@@ -12,6 +12,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    /**************************************
+     * Title : CorsRegistry Config        *
+     * Writer : 김준일                     *
+     * CreateDate : 2024-07-31            *
+     * Content : Filter bean 추가          *
+     *************************************/
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         // 모든 요청 맵핑 주소에 대한 crossOrigin setting

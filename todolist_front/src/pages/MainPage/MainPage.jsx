@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
-import * as s from "./Mainstyle";
+import * as s from "./style";
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { authUserStateAtom } from '../atoms/AuthAtom';
-import api from '../apis/instance';
+import { authUserStateAtom } from '../../atoms/AuthAtom';
+import api from '../../apis/instance';
 import { BsList } from 'react-icons/bs';
-import RegisterModal from '../components/registerModal/RegisterModal';
-import ModifyModal from '../components/modifyTodoModal/ModifyModal';
+import RegisterModal from '../../components/registerModal/RegisterModal';
+import ModifyModal from '../../components/modifyTodoModal/ModifyModal';
 import { PiNotePencilDuotone } from 'react-icons/pi';
 import { MdDeleteOutline, MdRadioButtonChecked, MdRadioButtonUnchecked } from 'react-icons/md';
 import { css } from '@emotion/react';
@@ -15,19 +15,54 @@ import { RiCheckboxBlankCircleLine } from 'react-icons/ri';
 
 function MainPage() {
     const navigate = useNavigate();
-    let today = new Date();
-    let year = today.getFullYear(); // 년도
-    let month = today.getMonth() + 1;
-    let date = today.getDate();  // 날짜
-    if((month / 10) > 0){
-        month = "0"+(today.getMonth() + 1);
-    }
-    if((date / 10) > 0){
-        date = "0"+(today.getDate());
-    }
-    const todayDate = year + "-" + month + "-" + date;
 
+    //오늘 날짜 yyyy-mm-dd 로 생성해주는 함수
+    const getTodayDate = () => {
+        let today = new Date();
+        let year = today.getFullYear(); // 년도
+        let month = today.getMonth() + 1;
+        let date = today.getDate();  // 날짜
+        if((month / 10) > 0){
+            month = "0"+(today.getMonth() + 1);
+        }
+        if((date / 10) > 0){
+            date = "0"+(today.getDate());
+        }
+        const todayDate = year + "-" + month + "-" + date;
+        return todayDate;
+    }
+    
+    //사용자 로그인 정보 불러오고, 로그아웃을 위해 Atom 호출
     const [ authUserState, setAuthUserState ] = useRecoilState(authUserStateAtom);
+    // 검색 조건을 담기 위한 useState
+    const [ searchParams, setSearchParams ] = useState({
+        userId: 0,
+        todoName: "",
+        updateDate: getTodayDate()
+    });
+    // 최초 조회, 검색조건 조회, 삭제시 전체 데이터를 담기 위한 useState
+    const [ allTodoList, setAllTodoList ] = useState([]);
+    // Mode에 따라 TodoList를 뿌려주기 위한 useState
+    const [ todoList, setTodoList ] = useState([]);
+    // 전체, 완료, 미완료 조건을 담기 위한 useState
+    const [ mode, setMode ] = useState(1);
+    // 등록, 수정시 전체 리스트를 다시 불러오기 위한 조건 useState
+    const [ refresh, setRefresh ] = useState(0);
+    // 등록 모달창 실행 및 데이터 전달을 위한 useState
+    const [ registerModalOpen, setRegisterModalOpen ] = useState({
+        userId: 0,
+        isOpen : false
+    });
+    // 수정 모달창 실행 및 데이터 전달을 위한 useState
+    const [ modifyModalOpen, setModifyModalOpen ] = useState({
+        userId: 0,
+        todoId: 0,
+        todoName: "",
+        isOpen: false,
+        status : 0
+    });
+
+    // 최초 로그인시 로그인 정보를 불러와 조회 조건 useState에 넣기 위한 useEffect
     useEffect(() => {
         if(!!authUserState?.userId){
             setSearchParams(searchParams => {
@@ -40,29 +75,7 @@ function MainPage() {
         }
     }, [authUserState]);
 
-    const [ searchParams, setSearchParams ] = useState({
-        userId: 0,
-        todoName: "",
-        updateDate: todayDate
-    });
-
-    const [ allTodoList, setAllTodoList ] = useState([]);
-    const [ todoList, setTodoList ] = useState([]);
-    const [ mode, setMode ] = useState(1);
-    const [ refresh, setRefresh ] = useState(0);
-
-    const [ registerModalOpen, setRegisterModalOpen ] = useState({
-        userId: 0,
-        isOpen : false
-    });
-    const [ modifyModalOpen, setModifyModalOpen ] = useState({
-        userId: 0,
-        todoId: 0,
-        todoName: "",
-        isOpen: false,
-        status : 0
-    });
-
+    // 검색 조건 값의 변경에 따라 전체 TodoList를 불러오기 위한 useEffect
     useEffect( () => {
         const defaultTodoList = async () => {
             // console.log(searchParams);
@@ -79,6 +92,7 @@ function MainPage() {
         }
     }, [searchParams.updateDate, searchParams.userId]);
 
+    // 모달창에서 등록, 수정시 전체 TodoList를 불러오기 위한 useEffect
     useEffect( () => {
         if(refresh !== 0) {
             const defaultTodoList = async () => {
@@ -101,6 +115,7 @@ function MainPage() {
         setRefresh(0);
     }, [refresh]);
 
+    // 전체 리스트가 수정되거나 전체, 완료, 미완료 조건에 따라 선택적으로 데이터를 렌더링하기 위한 useEffect
     useEffect(() => {
         if(mode === 1) {
             setTodoList([...allTodoList]);
@@ -119,41 +134,38 @@ function MainPage() {
         }
     }, [mode, allTodoList]);
 
+    // 메뉴 변경시 searchParams 초기화 메소드
+    const resetSearchparams = () => {
+        setSearchParams(data => {
+            return {
+                ...data,
+                todoName: ""
+            }
+        });
+    }
+
+    // 각 메뉴 버튼 선택시 모드 변경 메소드
     const handleMenuClick = (e, value) => {
         if(value === "allList") {
             // console.log("전체 선택");
-            setSearchParams(data => {
-                return {
-                    ...data,
-                    todoName: ""
-                }
-            });
+            resetSearchparams();
             setMode(1);
         }
 
         if(value === "completedList") {
             // console.log("완료 선택");
-            setSearchParams(data => {
-                return {
-                    ...data,
-                    todoName: ""
-                }
-            });
+            resetSearchparams();
             setMode(2);
         }
 
         if(value === "uncompletedList") {
             // console.log("미완료 선택");
-            setSearchParams(data => {
-                return {
-                    ...data,
-                    todoName: ""
-                }
-            });
+            resetSearchparams();
             setMode(3);
         }
     }
 
+    // 날짜 변경 이벤트를 받기 위한 메소드
     const handleDateInputChange = (e) => {
         setSearchParams(searchParams => ({
             ...searchParams,
@@ -161,6 +173,7 @@ function MainPage() {
         }))
     }
 
+    // 검색어 변경 이벤트를 받기 위한 메소드
     const handleSearchInputChange = (e) => {
         setSearchParams(searchParams => ({
             ...searchParams,
@@ -168,7 +181,7 @@ function MainPage() {
         }))
     }
 
-    // 다건 조회
+    // 다건 조회 (userId, updateDate, todoName 기반)
     const handleSearchClick = async () => {
         try {
             const response = await api.get("/todos", {params: searchParams});
@@ -196,7 +209,7 @@ function MainPage() {
         }
     }
 
-    // 체크박스 수정
+    // 체크박스 수정 (Label을 안 쓰고 checkbox를 사용할 경우 사용)
     // const handleCheckedChange = async (e, data1, data2) => {
     //     const todoId = parseInt(data1);
     //     const updateStatus = e.target.checked ? 1 : 0;
@@ -222,6 +235,7 @@ function MainPage() {
     //     }
     // }
 
+    // check Label 클릭시 status 갑 변경을 위한 메소드
     const handleCheckLabelClick = async (todoId, todoName, status) => {
         const updateTodoId = parseInt(todoId);
         const updateStatus = status ? 0 : 1;
@@ -248,17 +262,32 @@ function MainPage() {
         }
     }
 
+    // 프로필 버튼 선택시 mypage 경로 변경을 위한 메소드
+    const handleProfileClick = () => {
+        alert("프로필을 미구현 단계입니다.");
+    }
+
+    // 로그아웃 버튼 선택시 로그아웃을 위한 메소드
     const handleLogoutClick = async () => {
         try{
             const response = await api.post(`/logout`);
-            console.log(response.data);
-            alert("로그아웃 되셨습니다.");
+            // console.log(response.data);
+            alert(response.data);
+            setAuthUserState({
+                    userId: 0,
+                    username: "",
+                    name: "",
+                    email: ""
+                });
+            // alert(response.data);
             navigate('/login');
         } catch (e) {
             console.error(e);
         }
+        console.log(authUserState);
     }
 
+    // 등록 버튼 선택시 등록 모달창 호출을 위한 메소드
     const handleRegisterButtonClick = () => {
         setRegisterModalOpen({
             userId: searchParams.userId,
@@ -266,6 +295,7 @@ function MainPage() {
         });
     }
 
+    // 수정 버튼 선택시 수정 모달창 호출을 위한 메소드
     const handleModifyModalOpen = (todoId, todoName, status) => {
         setModifyModalOpen({
             todoId: todoId,
@@ -276,11 +306,13 @@ function MainPage() {
         });
     }
 
+    // 모달창을 닫기 위한 메소드
     const closeModal = () => {
         setModifyModalOpen(data => ({
             ...data,
             isOpen : false
         }));
+
         setRegisterModalOpen(data => ({
             ...data,
             isOpen : false
@@ -303,13 +335,11 @@ function MainPage() {
                         <div css={s.box1_sub1}>
                             <BsList size="40"/>
                         </div>
-                        <div css={s.box1_sub2}> <h1>Todo List</h1>
-                            <label ></label>
+                        <div css={s.box1_sub2}>
+                            <h1>Todo List</h1>
                         </div>
-                        {/* <div css={s.box1_sub3}>
-                            <label >Profile</label>
-                        </div> */}
-                        <div css={s.box1_sub4}>
+                        <div css={s.box1_sub3}>
+                            <label onClick={handleProfileClick}>Profile</label>
                             <label onClick={handleLogoutClick}>Logout</label>
                         </div>
                     </div>
@@ -329,7 +359,7 @@ function MainPage() {
                                 <input type='date' css={s.box3_sub1_date} name='updateDate' onChange={handleDateInputChange} value={searchParams.updateDate}/>
                             </div>
                             <div css={s.box3_sub1_span2}>
-                                <input type="text" css={s.box3_sub1_input} name='todoName' onChange={handleSearchInputChange} onKeyDown={handleSearchOnKeyDown} value={searchParams.todoName} placeholder='search todo...'/>
+                                <input type="text" css={s.box3_sub1_input} name='todoName' onChange={handleSearchInputChange} onKeyDown={handleSearchOnKeyDown} value={searchParams.todoName} placeholder='search todo...' autoFocus/>
                                 <button css={s.box3_sub1_button} onClick={handleSearchClick}>Search</button>
                             </div>
                         </div>
@@ -380,7 +410,7 @@ function MainPage() {
                                                         </p>
                                                     </td>
                                                 </tr>
-                                            ) : <span css={s.emptyRetulse}>"조회 결과가 없습니다."</span>
+                                            ) : <span css={s.emptyRetulse}>"There is no information"</span>
                                         }
                                     </div>
                                 </tbody>
