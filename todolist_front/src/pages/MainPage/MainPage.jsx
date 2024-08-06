@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import * as s from "./style";
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { authUserStateAtom } from '../../atoms/AuthAtom';
+import { authStateAtom, authUserStateAtom } from '../../atoms/AuthAtom';
 import api from '../../apis/instance';
 import { BsList } from 'react-icons/bs';
 import RegisterModal from '../../components/registerModal/RegisterModal';
@@ -34,6 +34,7 @@ function MainPage() {
     
     //사용자 로그인 정보 불러오고, 로그아웃을 위해 Atom 호출
     const [ authUserState, setAuthUserState ] = useRecoilState(authUserStateAtom);
+    const [ authState, setAuthState ] = useRecoilState(authStateAtom);
     // 검색 조건을 담기 위한 useState
     const [ searchParams, setSearchParams ] = useState({
         userId: 0,
@@ -112,6 +113,7 @@ function MainPage() {
         if(refresh === 1) {
             setMode(1);
         }
+        // 상태값을 다시 0으로 돌려줘서 다른 곳에서 사용할 수 있도록 함.
         setRefresh(0);
     }, [refresh]);
 
@@ -273,14 +275,8 @@ function MainPage() {
             const response = await api.post(`/logout`);
             // console.log(response.data);
             alert(response.data);
-            setAuthUserState({
-                    userId: 0,
-                    username: "",
-                    name: "",
-                    email: ""
-                });
+            setAuthState(true);
             // alert(response.data);
-            navigate('/login');
         } catch (e) {
             console.error(e);
         }

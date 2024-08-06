@@ -5,15 +5,15 @@
 <mapper namespace="com.toyproject.todolist.repository.UserMapper">
     <select id="findUserByUsername" parameterType="com.toyproject.todolist.entity.User" resultType="com.toyproject.todolist.entity.User">
         select
-        user_id as userId,
-        username,
-        password,
-        name,
-        email
+            user_id as userId,
+            username,
+            password,
+            name,
+            email
         from
-        user_tb
+            user_tb
         where
-        username = #{username};
+            username = #{username};
     </select>
     <select id="findUserPasswordByUsername" parameterType="com.toyproject.todolist.entity.User" resultType="com.toyproject.todolist.entity.User">
         select

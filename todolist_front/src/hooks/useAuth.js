@@ -24,7 +24,10 @@ function useAuth() {
     }
 
     useEffect(() => {
+        if(authState) {
             checkAuthentication();
+        }
+        setAuthState(false);
     }, [authState]);
 }
 

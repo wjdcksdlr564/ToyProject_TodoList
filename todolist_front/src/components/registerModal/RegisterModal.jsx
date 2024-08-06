@@ -15,8 +15,8 @@ const RegisterModal = ({ registerModalOpen, closeModal, setRefresh }) => {
     //등록
     const handleRegisterButtonClick = async (e) => {
         const registerTodoName = registerTodo.todoName.trim("");
-        const registerData = {todoName: registerTodo.registerTodoName, userId: registerModalOpen.userId};
-        if(!registerData.todoName) {
+        const registerData = {todoName: registerTodoName, userId: registerModalOpen.userId};
+        if(!registerTodoName) {
             alert("Todo Name can not be null");
             return;
         }

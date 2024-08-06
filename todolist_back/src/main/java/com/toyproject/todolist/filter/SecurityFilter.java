@@ -1,6 +1,7 @@
 package com.toyproject.todolist.filter;
 import com.toyproject.todolist.entity.User;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.*;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Log4j2
+@Component
 public class SecurityFilter extends HttpFilter implements Filter {
 
 
@@ -28,7 +30,7 @@ public class SecurityFilter extends HttpFilter implements Filter {
         log.info(" 시큐리티 필터 동작");
         System.out.println("session: " + session.getId());
         User user = (User) session.getAttribute("authentication");
-        if(user == null && !httpRequest.getMethod().equals("OPTIONS")) {
+        if(user == null && !httpRequest.getMethod().equals("OPTIONS")) {    // PUT, DELETE 요청은 OPTION 요청이 한 번 더 날아가서 세션이 두 번 생성 됨 (I don't know why....)
             httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "세션이 유효하지 않습니다.");  //status : 401 에러, 정상은 200 처리
             return ;
         }

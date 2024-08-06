@@ -15,7 +15,7 @@ const ModifyModal = ({ modifyModalOpen, closeModal, setRefresh }) => {
     const handleModifyButtonClick = async (e) => {
         const modifyTodoTodoName = modifyTodo.todoName.trim("");
         const updataData = {todoId: modifyModalOpen.todoId, userId: modifyModalOpen.userId, todoName: modifyTodoTodoName, status: modifyModalOpen.status};
-        if(!updataData.todoName) {
+        if(!modifyTodoTodoName) {
             alert("Todo Name can not be null");
             return;
         }
